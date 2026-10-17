@@ -22,5 +22,5 @@ Evidence
 - [evidence/cpu.txt](evidence/cpu.txt) - Data about cpu.
 - [evidence/memory.txt](evidence/memory.txt) - Data about memory.
 - [evidence/disk.txt](evidence/disk.txt) - Data about disk.
-- [evidence/BIOs.txt](evidence/BIOS.txt) - Data about BIOS version.
+- [evidence/bios.txt](evidence/bios.txt) - Data about BIOS version.
 - [evidence/virtualization.txt](evidence/virtualization.txt) - Data about virtualization.
