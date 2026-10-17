@@ -1,0 +1,5 @@
+PS C:\Users\User\labs\lab00-inventory> Get-CimInstance Win32_BIOS | Select-Object Manufacturer, SMBIOSBIOSVersion, ReleaseDate
+
+Manufacturer SMBIOSBIOSVersion ReleaseDate
+------------ ----------------- -----------
+LENOVO       MCCN27WW          4/2/2024 5:00:00 AM
