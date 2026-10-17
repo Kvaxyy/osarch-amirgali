@@ -1,0 +1,11 @@
+PS C:\Users\User\labs\lab00-inventory> Get-CimInstance Win32_PhysicalMemory | Select-Object DeviceLocator, Capacity, Speed
+
+DeviceLocator                Capacity Speed
+-------------                -------- -----
+Controller0-ChannelA-DIMM0 8589934592  3200
+Controller1-ChannelA       8589934592  3200
+PS C:\Users\User\labs\lab00-inventory> Get-CimInstance Win32_OperatingSystem | Select-Object TotalVisibleMemorySize
+
+TotalVisibleMemorySize
+----------------------
+              16494456
