@@ -1,1 +1,12 @@
+PS C:\Users\User\labs\lab00-inventory> Get-PhysicalDisk | Select-Object FriendlyName, MediaType, BusType
 
+FriendlyName               MediaType BusType
+------------               --------- -------
+SAMSUNG MZAL4512HBLU-00BL2 SSD       NVMe
+PS C:\Users\User\labs\lab00-inventory> Get-Volume | Select-Object DriveLetter, FileSystemLabel, SizeRemaining
+
+DriveLetter FileSystemLabel SizeRemaining
+----------- --------------- -------------
+                                 89153536
+C                             59674013696
+                                 55924736
