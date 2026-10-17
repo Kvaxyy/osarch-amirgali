@@ -1,1 +1,5 @@
+PS C:\Users\User\labs\lab00-inventory> Get-CimInstance Win32_Processor | Select-Object Name, NumberOfCores, NumberOfLogicalProcessors
 
+Name                                 NumberOfCores NumberOfLogicalProcessors
+----                                 ------------- -------------------------
+13th Gen Intel(R) Core(TM) i5-13420H             8                        12
