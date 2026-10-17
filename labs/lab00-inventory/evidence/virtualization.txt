@@ -1,0 +1,4 @@
+PS C:\Users\User\labs\lab00-inventory> systeminfo | Select-String "Hyper-V", "Виртуализация"
+
+Требования Hyper-V:                      Расширения режима мониторинга виртуальной машины: Да
+                                         Виртуализация включена во встроенном ПО: Да
