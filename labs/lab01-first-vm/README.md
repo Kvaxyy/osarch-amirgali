@@ -19,7 +19,3 @@ Accidentally instaled wrong version of ubuntu. After looking at step by step gui
 - evidence/guest-release.png- lab_release -a output.
 - evidence/broken.png - deleting the hostname file wich broke the VM.
 - evidence/Snapshot.png - snapshot of the working VM called clean-install and successful rollback.
-
-Use Control + Shift + m to toggle the tab key moving focus. Alternatively, use esc then tab to move to the next interactive element on the page.
-Файл не выбран
-Attach files by dragging & dropping, selecting or pasting them.
