@@ -1,1 +1,54 @@
+=== 1. Ubuntu -> Windows ===
+amirgali@lab1:~$ ping -c 4 10.0.2.4
+PING 10.0.2.4 (10.0.2.4) 56(84) bytes of data.
+64 bytes from 10.0.2.4: icmp_seq=1 ttl=128 time=1.54 ms
+64 bytes from 10.0.2.4: icmp_seq=2 ttl=128 time=1.37 ms
+64 bytes from 10.0.2.4: icmp_seq=3 ttl=128 time=1.54 ms
+64 bytes from 10.0.2.4: icmp_seq=4 ttl=128 time=1.22 ms
 
+--- 10.0.2.4 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3004ms
+rtt min/avg/max/mdev = 1.216/1.416/1.540/0.133 ms
+
+
+=== 2. Ubuntu -> Internet (ping ubuntu.com) ===
+amirgali@lab1:~$ ping -c 4 ubuntu.com
+PING ubuntu.com (185.125.190.29) 56(84) bytes of data.
+64 bytes from 185.125.190.29: icmp_seq=1 ttl=54 time=38.4 ms
+64 bytes from 185.125.190.29: icmp_seq=2 ttl=54 time=37.9 ms
+64 bytes from 185.125.190.29: icmp_seq=3 ttl=54 time=38.1 ms
+64 bytes from 185.125.190.29: icmp_seq=4 ttl=54 time=38.0 ms
+
+--- ubuntu.com ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3004ms
+rtt min/avg/max/mdev = 37.912/38.100/38.415/0.198 ms
+
+
+=== 3. Windows -> Ubuntu ===
+PS C:\Users\lab02-windows> ping 10.0.2.5
+
+Pinging 10.0.2.5 with 32 bytes of data:
+Reply from 10.0.2.5: bytes=32 time=1ms TTL=64
+Reply from 10.0.2.5: bytes=32 time=1ms TTL=64
+Reply from 10.0.2.5: bytes=32 time<1ms TTL=64
+Reply from 10.0.2.5: bytes=32 time=1ms TTL=64
+
+Ping statistics for 10.0.2.5:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 1ms, Average = 0ms
+
+
+=== 4. Windows -> Internet ===
+PS C:\Users\lab02-windows> ping ubuntu.com
+
+Pinging ubuntu.com [185.125.190.29] with 32 bytes of data:
+Reply from 185.125.190.29: bytes=32 time=39ms TTL=54
+Reply from 185.125.190.29: bytes=32 time=38ms TTL=54
+Reply from 185.125.190.29: bytes=32 time=38ms TTL=54
+Reply from 185.125.190.29: bytes=32 time=40ms TTL=54
+
+Ping statistics for 185.125.190.29:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 38ms, Maximum = 40ms, Average = 38ms
