@@ -5,7 +5,7 @@ Created a virtual machine running ubuntu server. I allocated 2 vCPUs because it 
 ## Result:
 | What                       | Value                                  | Where I got it / Source                                    |
 | :------------------------- | :------------------------------------- | :--------------------------------------------------------- |
-| Virtual Machine Name   | lab                         | VirtualBox Manager                                         |
+| Virtual Machine Name   | lab01-ubuntu                         | VirtualBox Manager                                         |
 | Server Name (Hostname) | lab1                   | /etc/hostname                                            |
 | Username               | amirgali                                  | System Prompt / Login                                      |
 | Guest OS Version       | Ubuntu 26.04.1 LTS                     | lsb_release -a (evidence/guest-release.txt)            |
@@ -15,7 +15,7 @@ Created a virtual machine running ubuntu server. I allocated 2 vCPUs because it 
 ## What did not work for the first time:
 Accidentally instaled wrong version of ubuntu. After looking at step by step guide understood my mistake and downloaded right version.
 ## Evidence:
-- evidence/vmSettings.png- VM settings.
-- evidence/guest-release.png- lab_release -a output.
-- evidence/broken.png - deleting the hostname file wich broke the VM.
-- evidence/Snapshot.png - snapshot of the working VM called clean-install and successful rollback.
+- [evidence/vm-settings.png](evidence/vm-settings.png) — CPU, memory and disk as configured
+- [evidence/guest-release.txt](evidence/guest-release.txt) — Ubuntu Server is running in the guest
+- [evidence/broken.png](evidence/broken.png) — the guest in its broken state
+- [evidence/snapshot-list.png](evidence/snapshot-list.png) — the snapshot, after the rollback
