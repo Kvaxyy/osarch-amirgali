@@ -19,3 +19,4 @@ Accidentally instaled wrong version of ubuntu. After looking at step by step gui
 - [evidence/guest-release.txt](evidence/guest-release.txt) — Ubuntu Server is running in the guest
 - [evidence/broken.png](evidence/broken.png) — the guest in its broken state
 - [evidence/snapshot-list.png](evidence/snapshot-list.png) — the snapshot, after the rollback
+- [evidence/hostname-after-rollback.png] — the cat /etc/hostname after rollback
