@@ -1,0 +1,32 @@
+amirgali@lab1:~$ lsb-release -a
+Command 'lsb-release' not found, did you mean:
+  command 'lsb_release' from deb lsb-release (12.1-2build1)
+Try: sudo apt install <deb name>
+
+amirgali@lab1:~$ lsb_release -a
+No LSB modules are available.
+Distributor ID: Ubuntu
+Description: Ubuntu 26.04.1 LTS
+Release: 26.04
+Codename: resolute
+
+amirgali@lab1:~$ hostname
+lab1
+
+amirgali@lab1:~$ nproc
+2
+
+amirgali@lab1:~$ free -h
+               total        used        free      shared  buff/cache   available
+Mem:           3.3Gi       420Mi       2.6Gi       1.1Mi       482Mi       2.9Gi
+Swap:             0B          0B          0B
+
+amirgali@lab1:~$ df -h /
+Filesystem                    Size  Used Avail Use% Mounted on
+/dev/mapper/ubuntu--vg-ubuntu--lv  11G  3.4G  6.9G  33% /
+
+amirgali@lab1:~$ ip -br a
+lo               UNKNOWN        127.0.0.1/8 ::1/128
+enp0s3           UP             10.0.2.15/24 metric 100 fe80::a00:27ff:fe0c:ee20/64
+
+amirgali@lab1:~$
