@@ -15,8 +15,8 @@ Both VMs successfully reach the internet and can communicate with each other:
 - Both VMs can resolve external domain names (tested via `ping google.com` or curl).
 
 ## 4. Problems Encountered and Resolved
-- **Problem:** Initially, the Linux guest could not ping the Windows guest, even though both were on the same internal/NAT network. The Windows guest ignored all incoming ICMP (ping) requests.
-- **Resolution:** This is due to the default Windows Defender Firewall policy, which blocks inbound ICMPv4 echo requests. Inside the Windows guest, the "File and Printer Sharing (Echo Request - ICMPv4-In)" rule was enabled in the Advanced Firewall settings. After applying this, ping packets were successfully received and answered. (A completely flawless build from scratch is rarely realistic, and this standard firewall behavior must be manually overridden).
+- **Problem:** Initially, the Linux guest could not ping the Windows guest, even though both were on the same NAT network. The Windows guest ignored all incoming ICMP requests.
+- **Resolution:** This is due to the default Windows Defender Firewall policy, which blocks inbound ICMPv4 echo requests. Inside the Windows guest, the "File and Printer Sharing (Echo Request - ICMPv4-In)" rule was enabled in the Advanced Firewall settings. After applying this, ping packets were successfully received and answered. 
 
 ## 5. Verification Check list for Peer Reviewer
 - [ ] Both VM installation ISOs are unmounted after installation.
