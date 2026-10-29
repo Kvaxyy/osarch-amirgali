@@ -17,7 +17,7 @@ Select "Create a virtual hard disk now", choose **VDI (VirtualBox Disk Image)**,
 *Why "Dynamically allocated" and 20 GB:* It only takes up space on your physical drive as the VM fills it up, saving you host space. 20 GB is plenty for a basic Linux environment and test packages.
 
 ### Step 3: Network Configuration
-Before starting, go to the VM's **Settings** -> **Network**. Change the "Attached to" dropdown to **NAT Network** (or add a second "Host-Only" adapter if you don't have a NAT network pre-configured).
+Before starting, go to the VM's **Settings** -> **Network**. Change the "Attached to" dropdown to **NAT Network**.
 ![Network Adapter Settings](evidence/03-network-adapter.png)
 *Why NAT Network and not standard NAT:* Standard NAT isolates VMs completely, meaning they can see the internet but cannot talk to each other. A "NAT Network" creates a shared virtual switch, enabling both VMs to access the internet and ping each other.
 
