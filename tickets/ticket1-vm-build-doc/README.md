@@ -26,11 +26,7 @@ Immediately after adding this firewall rule, the Windows guest began responding 
 
 5. Verification Checklist for Peer Reviewer
 [ ] Both VM installation ISOs are unmounted after installation.
-
 [ ] Network adapters are assigned to NAT Network (NatNetwork).
-
 [ ] Inbound ICMPv4 firewall rule was executed in Windows PowerShell.
-
 [ ] Bidirectional ping between 10.0.2.4 and 10.0.2.5 succeeds with 0% packet loss.
-
 [ ] Snapshot restore point (Fresh Install & Network Configured) is present for the environment.
