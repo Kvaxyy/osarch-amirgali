@@ -24,9 +24,9 @@ Both guests successfully reach the external internet and have verified mutual ne
   New-NetFirewallRule -DisplayName "Allow ping in (ICMPv4)" -Protocol ICMPv4 -IcmpType 8 -Direction Inbound -Action Allow
 Immediately after adding this firewall rule, the Windows guest began responding to ping requests, and mutual network reachability was fully established.
 
-5. Verification Checklist for Peer Reviewer
-[ ] Both VM installation ISOs are unmounted after installation.
-[ ] Network adapters are assigned to NAT Network (NatNetwork).
-[ ] Inbound ICMPv4 firewall rule was executed in Windows PowerShell.
-[ ] Bidirectional ping between 10.0.2.4 and 10.0.2.5 succeeds with 0% packet loss.
-[ ] Snapshot restore point (Fresh Install & Network Configured) is present for the environment.
+## 5. Verification Check list for Peer Reviewer
+- [ ] Both VM installation ISOs are unmounted after installation.
+- [ ] Network adapters are assigned to NAT Network (NatNetwork).
+- [ ] Inbound ICMPv4 firewall rule was executed in Windows PowerShell
+- [ ] Bidirectional ping between 10.0.2.4 and 10.0.2.5 succeeds with 0% packet loss
+- [ ] Snapshot restore point (Fresh Install & Network Configured) is present for the environment
