@@ -1,6 +1,6 @@
 ## 1. Resource Allocation & Calculation
 The host machine has 16 GB of RAM and a 475 GB SSD. To ensure the host remains fully functional while both guest VMs are running, resources were allocated as follows:
-- **Linux Guest (Ubuntu 26.04.1):** Allocated 2 GB RAM and 20 GB of dynamically allocated virtual disk space. 2 GB is the recommended minimum for a GUI-based Linux test environment, leaving plenty of room for the host.
+- **Linux Guest (Ubuntu 26.04.1):** Allocated 4 GB RAM and 25 GB of dynamically allocated virtual disk space. 4 GB is the recommended minimum for a GUI-based Linux test environment, leaving plenty of room for the host.
 - **Windows Guest (Windows 11):** Allocated 4 GB RAM and 40 GB of dynamically allocated virtual disk space. Windows requires at least 4 GB to prevent severe paging/performance degradation.
 - **Host Reserve:** This leaves 10 GB of RAM and enough of free disk space for the host machine, preventing any resource starvation or host instability.
 
