@@ -51,8 +51,8 @@ Inside the Windows guest, open PowerShell with administrative privileges (right-
 New-NetFirewallRule -DisplayName "Allow ping in (ICMPv4)" -Protocol ICMPv4 -IcmpType 8 -Direction Inbound -Action Allow
 ```
 ### Step 8: Network Connectivity Tests
-From the Linux terminal, find your IP using `ip addr` (e.g., `10.0.2.4`) and ping the Windows IP.
-From the Windows Command Prompt (`cmd`), find your IP using `ipconfig` (e.g., `10.0.2.5`) and ping the Linux machine.
+From the Linux terminal, find your IP using `ip addr` (e.g., `10.0.2.5`) and ping the Windows IP.
+From the Windows Command Prompt (`cmd`), find your IP using `ipconfig` (e.g., `10.0.2.4`) and ping the Linux machine.
 
 > Check: Execute `ping <other_vm_ip>` on both guest VMs. You should see active replies.
 *(Refer to `evidence/05-ping-between-guests.txt` for the capture of the ping command outputs).*
