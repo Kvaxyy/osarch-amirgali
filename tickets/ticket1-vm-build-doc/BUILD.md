@@ -44,14 +44,12 @@ Create a local offline account (e.g., `developer` / `password123`).
 
 ## Part 3: Connecting and Verifying the Environment
 
-### Step 7: Configure Windows Firewall for Connectivity
-Because Windows blocks incoming ping requests by default, we must allow them so the Linux machine can verify the network.
-1. In Windows, search for "Windows Defender Firewall with Advanced Security".
-2. Click **Inbound Rules** in the left sidebar.
-3. Scroll down to find **File and Printer Sharing (Echo Request - ICMPv4-In)**.
-4. Right-click and choose **Enable Rule**.
-*Why:* Without this, the Linux VM will never get a response from Windows, making network troubleshooting and collaborative testing impossible.
+### Step 7: Configure Windows Firewall to Allow Inbound Ping
+Inside the Windows guest, open PowerShell with administrative privileges (right-click the Start menu and select **Terminal (Admin)** or **Windows PowerShell (Admin)**). Run the following command:
 
+```powershell
+New-NetFirewallRule -DisplayName "Allow ping in (ICMPv4)" -Protocol ICMPv4 -IcmpType 8 -Direction Inbound -Action Allow
+```
 ### Step 8: Network Connectivity Tests
 From the Linux terminal, find your IP using `ip addr` (e.g., `10.0.2.4`) and ping the Windows IP.
 From the Windows Command Prompt (`cmd`), find your IP using `ipconfig` (e.g., `10.0.2.5`) and ping the Linux machine.
