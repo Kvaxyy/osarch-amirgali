@@ -2,7 +2,7 @@
 The host machine has 16 GB of RAM and a 475 GB SSD. To ensure the host remains fully functional while both guest VMs are running, resources were allocated as follows:
 - **Linux Guest (Ubuntu 26.04.1):** Allocated 4 GB RAM and 25 GB of dynamically allocated virtual disk space. 4 GB is the recommended minimum for a GUI-based Linux test environment, leaving plenty of room for the host.
 - **Windows Guest (Windows 11):** Allocated 4 GB RAM and 40 GB of dynamically allocated virtual disk space. Windows requires at least 4 GB to prevent severe paging/performance degradation.
-- **Host Reserve:** This leaves 10 GB of RAM and enough of free disk space for the host machine, preventing any resource starvation or host instability.
+- **Host Reserve:** This leaves 8 GB of RAM and enough of free disk space for the host machine, preventing any resource starvation or host instability.
 
 ## 2. Settings Differing from Default
 - **Network Adapter -> "NAT Network" (or Host-Only + NAT):** Changed from the default "NAT". *Why:* Default "NAT" isolates VMs from each other. They need to see each other (per requirements), so they were placed on a custom NAT Network (e.g., `10.0.2.0/24`) or given a second Host-Only adapter.
