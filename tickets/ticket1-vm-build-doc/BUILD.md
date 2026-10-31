@@ -208,6 +208,7 @@ The current evidence directory contains:
 - `evidence/02-disk-settings.png`
 - `evidence/03-network-adapter.png`
 - `evidence/04-guest-uname.txt`
+- `evidence/04b-ubuntu-install.png`
 - `evidence/05-ping-between-guests.txt`
 - `evidence/05b-guest-ipaddr.png`
 - `evidence/06-snapshot-list.png`
@@ -217,3 +218,4 @@ The current evidence directory contains:
 - `evidence/09b-windows-ip.png`
 - `evidence/10a-windows-firewall-rule.png`
 - `evidence/11b-windows-snapshot.png`
+
