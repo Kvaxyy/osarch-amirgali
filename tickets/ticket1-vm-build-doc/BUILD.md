@@ -8,7 +8,6 @@ You need a host computer with hardware virtualization enabled, VirtualBox instal
 
 This build assigns 4 GB RAM and 2 virtual CPUs to each guest, with dynamically allocated disks capped at 25 GB for Ubuntu and 40 GB for Windows. If your host differs from the one used for this build, reconsider the allocation before proceeding.
 
-> **Evidence note:** The submission requirements call for a screenshot at each step. Add a screenshot after completing every numbered step below, and replace or supplement the existing images as needed. The current evidence folder contains screenshots for only some steps.
 
 ## Part 1: Ubuntu Server guest
 
@@ -20,6 +19,8 @@ Open VirtualBox and select **New**. Name the machine `lab01-ubuntu`, choose **Li
 
 ![Ubuntu VM creation wizard](evidence/01-new-vm-wizard.png)
 
+This is the available screenshot for the VM creation wizard. Check that the name, ISO, memory, and CPU settings are legible; supplement it with a current **System** settings screenshot if any of those values are not visible.
+
 ### Step 2: Create the Ubuntu virtual disk
 
 Choose **Create a Virtual Hard Disk Now**. Select **VDI (VirtualBox Disk Image)**, choose **Dynamically allocated**, set the maximum size to **25 GB**, and finish creating the VM.
@@ -27,6 +28,8 @@ Choose **Create a Virtual Hard Disk Now**. Select **VDI (VirtualBox Disk Image)*
 **Why:** A dynamically allocated disk file grows as the guest writes data, up to its 25 GB limit. It does not guarantee that a particular amount of host disk space will remain free.
 
 ![Virtual disk settings](evidence/02-disk-settings.png)
+
+This is the available disk settings screenshot. It should visibly show the VDI format, dynamic allocation, and 25 GB maximum.
 
 ### Step 3: Create or select the shared NAT Network
 
@@ -38,7 +41,9 @@ Select `lab01-ubuntu`, open **Settings → Network → Adapter 1**, enable the a
 
 ![Ubuntu network adapter settings](evidence/03-network-adapter.png)
 
-### Step 4: Install Ubuntu Server
+This is the available network adapter screenshot. It documents the adapter setting shown in the image. It does not by itself prove the NAT Network subnet, DHCP setting, or Windows VM's adapter; add screenshots of those settings if they are not visible elsewhere.
+
+### Step 4: Install Ubuntu Server (or document the already-installed guest)
 
 Select `lab01-ubuntu` and click **Start**. Follow the Ubuntu Server installer. Choose the language, keyboard layout, and network configuration appropriate for the lab. Use the default partitioning of the empty virtual disk unless the assignment requires another layout. Create a non-shared lab account; the original build used username `amirgali` and hostname `lab1`. Set a unique password locally and do not publish it in this document or commit it to GitHub. Finish installation and reboot when prompted.
 
@@ -46,6 +51,9 @@ After reboot, if the installer asks to remove the installation medium, eject the
 
 **Why:** The VM has its own virtual disk, so the OS can be installed without changing the host. A unique local password avoids exposing credentials in a public build guide.
 
+If Ubuntu is already installed and you no longer have the installer screens, do not repeat the installation just to obtain screenshots. Instead, capture the running VM and its current **Settings → System**, **Storage**, and **Network** pages, and use the verification evidence in Step 5. These screenshots document the present setup, but they cannot prove which choices were made in the earlier installer. In the report, say that the installation screens were not captured. If this is a build guide intended for another person, retain the written installation instructions so that person can perform a fresh installation.
+
+> **Evidence available:** `evidence/04-guest-uname.txt` and `evidence/05b-guest-ipaddr.png` are post-installation evidence, not installer screenshots. The latter shows `ip addr` and `ip route` from the installed guest.
 
 ### Step 5: Verify the Ubuntu guest
 
@@ -56,11 +64,14 @@ uname -a
 ip addr
 ip route
 ```
-![Ubuntu network adapter settings](04b-guest-ipaddr.png)
 
-Confirm that `uname -a` reports a Linux kernel and `x86_64`, and record the guest's actual IPv4 address and default route. The address can differ from `10.0.2.5` if the NAT Network has a different subnet or DHCP allocation. Save the command output as `evidence/04-guest-uname.txt` (include the `ip addr` and `ip route` output as well, or save them in a separate evidence file).
+Confirm that `uname -a` reports a Linux kernel and `x86_64`, and record the guest's actual IPv4 address and default route. The address can differ from `10.0.2.5` if the NAT Network has a different subnet or DHCP allocation. `evidence/04-guest-uname.txt` contains `uname -a`; `evidence/05b-guest-ipaddr.png` shows `ip addr` and `ip route`, including address `10.0.2.5` and default route `10.0.2.1`.
 
 **Why:** These commands confirm the guest booted and show its real network configuration. Recording actual output makes later network checks reproducible.
+
+The Linux kernel output is in `evidence/04-guest-uname.txt`. The address and route output is shown below:
+
+![Linux guest IP address and routes](evidence/05b-guest-ipaddr.png)
 
 ## Part 2: Windows 11 guest
 
@@ -70,7 +81,9 @@ In VirtualBox Manager, select **New**. Name the machine `lab02-windows`, choose 
 
 **Why:** These are the resource settings used for this lab. Skipping unattended setup makes it possible to document the installation choices and account setup.
 
-> **Evidence to add:** Screenshot this wizard and its selected memory, CPU, and ISO settings. Link it here once added.
+![Windows VM wizard hardware settings](evidence/06b-windows-vm-wizard.png)
+
+This shows 4096 MB of memory and 2 CPUs. The VM name and Windows ISO selection are not visible in this capture, so document those choices in text or add a screenshot showing them.
 
 ### Step 7: Create the Windows virtual disk
 
@@ -78,7 +91,9 @@ Choose **Create a Virtual Hard Disk Now**, select **VDI**, choose **Dynamically 
 
 **Why:** The 40 GB virtual capacity is the limit selected for this lab. Dynamic allocation lets the host file grow with guest data, but the guest still cannot use more than the configured maximum.
 
-> **Evidence to add:** Screenshot the Windows disk type, allocation mode, and maximum size. Link it here once added.
+![Windows virtual disk settings](evidence/07b-windows-disk-settings.png)
+
+The screenshot shows a 40 GB disk and **Pre-allocate Full Size** unchecked, indicating dynamic allocation in this wizard.
 
 ### Step 8: Connect Windows to `NatNetwork`
 
@@ -86,7 +101,11 @@ Select `lab02-windows`, open **Settings → Network → Adapter 1**, enable the 
 
 **Why:** Using the same NAT Network allows the guests to communicate through the virtual network. The actual IP addresses depend on the subnet and DHCP server configured in Step 3.
 
-> **Evidence to add:** Capture the Windows adapter settings and the NAT Network configuration showing its name, subnet, and DHCP status. The existing adapter screenshot should not be treated as proof of both VM configurations unless it visibly shows both.
+The Ubuntu adapter screenshot is `evidence/03-network-adapter.png`. The Windows adapter screenshot below shows `lab02-windows` attached to `NatNetwork`:
+
+![Windows network adapter settings](evidence/08b-windows-network-adapter.png)
+
+Both guests' adapters are shown attached to the same named network. These screenshots do not show the NAT Network subnet or DHCP configuration; add that evidence if available.
 
 ### Step 9: Install and verify Windows
 
@@ -105,7 +124,11 @@ Record the actual IPv4 address and default route. Do not assume the address is `
 
 **Why:** The selected edition and activation status must match the available license. Checking the real IP configuration avoids relying on example addresses that may not match the configured NAT Network.
 
-> **Evidence to add:** Capture the important Windows installation/edition and post-installation network screens, plus the `ipconfig` output. Do not include passwords or product keys in screenshots.
+The current Windows network evidence shows IPv4 address `10.0.2.4`, subnet mask, default gateway, and route table:
+
+![Windows IP configuration and routes](evidence/09b-windows-ip.png)
+
+No Windows installer screenshots are present. Do not present this post-installation screenshot as evidence of the installation screens or selected edition.
 
 ## Part 3: Connectivity checks and snapshots
 
@@ -125,7 +148,9 @@ Get-NetFirewallRule -DisplayName "Allow ping in (ICMPv4)"
 
 **Why:** Windows Firewall may block incoming echo requests by default. This rule permits the specific diagnostic traffic needed for this lab without disabling the firewall. On a managed device, follow the administrator's network policy.
 
-> **Evidence to add:** Capture the command and successful rule inspection, with sensitive details omitted.
+![Windows inbound ICMP firewall rule](evidence/10a-windows-firewall-rule.png)
+
+This shows the inbound ICMPv4 rule being created and inspected as enabled. The rule permits echo requests for the connectivity check while leaving Windows Firewall enabled.
 
 ### Step 11: Test guest-to-guest and internet connectivity
 
@@ -159,7 +184,9 @@ Resolve-DnsName example.com
 
 Record the actual outputs. A successful ping to an IP checks IP connectivity; successful name resolution checks DNS. Some networks block ICMP, so if the IP ping fails, use an approved HTTPS connectivity check and document the command and result instead of claiming that internet access is unavailable.
 
-**Why:** Inter-guest ping verifies communication between the two guests. Separate IP and DNS checks distinguish general outbound connectivity from name resolution. The existing `evidence/05-ping-between-guests.txt` records successful guest-to-guest pings; add the internet and DNS outputs before claiming those checks passed.
+**Why:** Inter-guest ping verifies communication between the two guests. Separate IP and DNS checks distinguish general outbound connectivity from name resolution. The existing `evidence/05-ping-between-guests.txt` records successful guest-to-guest pings; it does not show the internet or DNS tests listed above.
+
+![Bidirectional guest-to-guest ping evidence](evidence/05-ping-between-guests.txt)
 
 ### Step 12: Take a clean snapshot of each guest
 
@@ -169,7 +196,9 @@ Shut down both guests cleanly. In VirtualBox Manager, select `lab01-ubuntu`, ope
 
 ![VirtualBox snapshot list](evidence/06-snapshot-list.png)
 
-> **Evidence to add:** Ensure the screenshot clearly identifies both VMs and their snapshot names. If one screenshot cannot show both, capture one screenshot per VM.
+`evidence/06-snapshot-list.png` shows the Ubuntu VM and its `Fresh Install & Network Configured` snapshot. The additional screenshot below shows the Windows VM and a snapshot with the same name:
+
+![Windows VM snapshot](evidence/11b-windows-snapshot.png)
 
 ## Evidence checklist
 
@@ -180,6 +209,11 @@ The current evidence directory contains:
 - `evidence/03-network-adapter.png`
 - `evidence/04-guest-uname.txt`
 - `evidence/05-ping-between-guests.txt`
+- `evidence/05b-guest-ipaddr.png`
 - `evidence/06-snapshot-list.png`
-
-Before submission, add the missing screenshots for each significant step and evidence for both VM network adapters, the NAT Network subnet/DHCP configuration, internet and DNS checks from each guest, and the snapshot for each guest. Keep the evidence genuine and captured from the actual build.
+- `evidence/06b-windows-vm-wizard.png`
+- `evidence/07b-windows-disk-settings.png`
+- `evidence/08b-windows-network-adapter.png`
+- `evidence/09b-windows-ip.png`
+- `evidence/10a-windows-firewall-rule.png`
+- `evidence/11b-windows-snapshot.png`
