@@ -42,23 +42,21 @@ New-NetFirewallRule -DisplayName "Allow ping in (ICMPv4)" -Protocol ICMPv4 -Icmp
 
 ## Evidence checklist
 
-The current evidence directory contains:
-
-- `evidence/01-new-vm-wizard.png`
-- `evidence/02-disk-settings.png`
-- `evidence/03-network-adapter.png`
-- `evidence/04-guest-uname.txt`
-- `evidence/04b-ubuntu-install.png`
-- `evidence/05-ping-between-guests.txt`
-- `evidence/05b-guest-ipaddr.png`
-- `evidence/06-snapshot-list.png`
-- `evidence/06b-windows-vm-wizard.png`
-- `evidence/07b-windows-disk-settings.png`
-- `evidence/08b-windows-network-adapter.png`
-- `evidence/09b-windows-ip.png`
-- `evidence/10a-windows-firewall-rule.png`
-- `evidence/11b-windows-snapshot.png`
-- `evidence/11c-ping-internet`
+- `evidence/01-new-vm-wizard.png` — shows the Ubuntu VM creation settings, including the selected ISO, memory, CPU, and disk size.
+- `evidence/02-disk-settings.png` — shows the Ubuntu virtual disk configuration.
+- `evidence/03-network-adapter.png` — shows the Ubuntu VM connected to the `NatNetwork`.
+- `evidence/04-guest-uname.txt` — shows the Linux kernel version and guest architecture.
+- `evidence/04b-ubuntu-install.png` — shows the Ubuntu installer boot menu.
+- `evidence/05-ping-between-guests.txt` — shows successful ping tests between the Linux and Windows guests in both directions.
+- `evidence/05b-guest-ipaddr.png` — shows the Ubuntu guest's IP address and route information.
+- `evidence/06-snapshot-list.png` — shows the Ubuntu VM's `Fresh Install & Network Configured` snapshot.
+- `evidence/06b-windows-vm-wizard.png` — shows the memory and CPU settings selected for the Windows VM.
+- `evidence/07b-windows-disk-settings.png` — shows the Windows virtual disk set to 40 GB with full-size pre-allocation disabled.
+- `evidence/08b-windows-network-adapter.png` — shows the Windows VM connected to the same `NatNetwork`.
+- `evidence/09b-windows-ip.png` — shows the Windows guest's IP address, default gateway, and route table.
+- `evidence/10a-windows-firewall-rule.png` — shows the inbound ICMPv4 firewall rule being created and verified as enabled.
+- `evidence/11b-windows-snapshot.png` — shows the Windows VM's `Fresh Install & Network Configured` snapshot.
+- `evidence/11c-ping-internet` — shows the guests' internet connectivity checks. Replace this path with the actual filename and extension in your evidence folder.
 
 ## 5. What I would do differently
 
