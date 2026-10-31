@@ -41,14 +41,25 @@ The peer reviewer should follow `BUILD.md` literally and record the first step t
 
 ## 4. Evidence
 
-- [`evidence/01-new-vm-wizard.png`](evidence/01-new-vm-wizard.png) — shows the VM creation wizard and selected initial VM settings.
-- [`evidence/02-disk-settings.png`](evidence/02-disk-settings.png) — shows the virtual disk configuration.
-- [`evidence/03-network-adapter.png`](evidence/03-network-adapter.png) — shows a network adapter configured for the shared NAT Network; capture or add evidence for both guests and the NAT Network subnet/DHCP settings if this image does not show them.
-- [`evidence/04-guest-uname.txt`](evidence/04-guest-uname.txt) — shows the Linux guest's kernel and architecture from `uname -a`.
-- [`evidence/05-ping-between-guests.txt`](evidence/05-ping-between-guests.txt) — shows successful ping checks in both directions between the guests, with no packet loss.
-- [`evidence/06-snapshot-list.png`](evidence/06-snapshot-list.png) — shows the VirtualBox snapshot list.
+## Evidence checklist
 
-The current evidence includes the inter-guest ping, but does not demonstrate internet access or DNS resolution from either guest. Add command output from both guests proving those checks before claiming internet connectivity here. Also ensure the screenshots cover each build step as required by the ticket.
+The current evidence directory contains:
+
+- `evidence/01-new-vm-wizard.png`
+- `evidence/02-disk-settings.png`
+- `evidence/03-network-adapter.png`
+- `evidence/04-guest-uname.txt`
+- `evidence/04b-ubuntu-install.png`
+- `evidence/05-ping-between-guests.txt`
+- `evidence/05b-guest-ipaddr.png`
+- `evidence/06-snapshot-list.png`
+- `evidence/06b-windows-vm-wizard.png`
+- `evidence/07b-windows-disk-settings.png`
+- `evidence/08b-windows-network-adapter.png`
+- `evidence/09b-windows-ip.png`
+- `evidence/10a-windows-firewall-rule.png`
+- `evidence/11b-windows-snapshot.png`
+
 
 ## 5. What I would do differently
 
