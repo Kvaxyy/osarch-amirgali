@@ -19,7 +19,6 @@ Open VirtualBox and select **New**. Name the machine `lab01-ubuntu`, choose **Li
 
 ![Ubuntu VM creation wizard](evidence/01-new-vm-wizard.png)
 
-This is the available screenshot for the VM creation wizard. Check that the name, ISO, memory, and CPU settings are legible; supplement it with a current **System** settings screenshot if any of those values are not visible.
 
 ### Step 2: Create the Ubuntu virtual disk
 
@@ -29,7 +28,6 @@ Choose **Create a Virtual Hard Disk Now**. Select **VDI (VirtualBox Disk Image)*
 
 ![Virtual disk settings](evidence/02-disk-settings.png)
 
-This is the available disk settings screenshot. It should visibly show the VDI format, dynamic allocation, and 25 GB maximum.
 
 ### Step 3: Create or select the shared NAT Network
 
@@ -40,8 +38,6 @@ Select `lab01-ubuntu`, open **Settings → Network → Adapter 1**, enable the a
 **Why:** Both guests need to attach to the same NAT Network to test communication with one another while using the host for outbound connectivity. A standard NAT adapter on each VM is not the same shared network.
 
 ![Ubuntu network adapter settings](evidence/03-network-adapter.png)
-
-This is the available network adapter screenshot. It documents the adapter setting shown in the image. It does not by itself prove the NAT Network subnet, DHCP setting, or Windows VM's adapter; add screenshots of those settings if they are not visible elsewhere.
 
 ### Step 4: Install Ubuntu Server (or document the already-installed guest)
 
@@ -83,7 +79,6 @@ In VirtualBox Manager, select **New**. Name the machine `lab02-windows`, choose 
 
 ![Windows VM wizard hardware settings](evidence/06b-windows-vm-wizard.png)
 
-This shows 4096 MB of memory and 2 CPUs. The VM name and Windows ISO selection are not visible in this capture, so document those choices in text or add a screenshot showing them.
 
 ### Step 7: Create the Windows virtual disk
 
@@ -93,7 +88,6 @@ Choose **Create a Virtual Hard Disk Now**, select **VDI**, choose **Dynamically 
 
 ![Windows virtual disk settings](evidence/07b-windows-disk-settings.png)
 
-The screenshot shows a 40 GB disk and **Pre-allocate Full Size** unchecked, indicating dynamic allocation in this wizard.
 
 ### Step 8: Connect Windows to `NatNetwork`
 
@@ -105,7 +99,6 @@ The Ubuntu adapter screenshot is `evidence/03-network-adapter.png`. The Windows 
 
 ![Windows network adapter settings](evidence/08b-windows-network-adapter.png)
 
-Both guests' adapters are shown attached to the same named network. These screenshots do not show the NAT Network subnet or DHCP configuration; add that evidence if available.
 
 ### Step 9: Install and verify Windows
 
@@ -128,7 +121,6 @@ The current Windows network evidence shows IPv4 address `10.0.2.4`, subnet mask,
 
 ![Windows IP configuration and routes](evidence/09b-windows-ip.png)
 
-No Windows installer screenshots are present. Do not present this post-installation screenshot as evidence of the installation screens or selected edition.
 
 ## Part 3: Connectivity checks and snapshots
 
@@ -150,7 +142,6 @@ Get-NetFirewallRule -DisplayName "Allow ping in (ICMPv4)"
 
 ![Windows inbound ICMP firewall rule](evidence/10a-windows-firewall-rule.png)
 
-This shows the inbound ICMPv4 rule being created and inspected as enabled. The rule permits echo requests for the connectivity check while leaving Windows Firewall enabled.
 
 ### Step 11: Test guest-to-guest and internet connectivity
 
