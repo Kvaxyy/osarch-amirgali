@@ -1,0 +1,21 @@
+=== Ubuntu -> Internet ===
+amirgali@lab1:~$ ping -c 4 ubuntu.com
+PING ubuntu.com (185.125.190.29) 56(84) bytes of data.
+64 bytes from 185.125.190.29: icmp_seq=1 ttl=54 time=38.4 ms
+64 bytes from 185.125.190.29: icmp_seq=2 ttl=54 time=37.9 ms
+64 bytes from 185.125.190.29: icmp_seq=3 ttl=54 time=38.1 ms
+64 bytes from 185.125.190.29: icmp_seq=4 ttl=54 time=38.0 ms
+
+===  Windows -> Internet ===
+PS C:\Users\lab02-windows> ping ubuntu.com
+
+Pinging ubuntu.com [185.125.190.29] with 32 bytes of data:
+Reply from 185.125.190.29: bytes=32 time=39ms TTL=54
+Reply from 185.125.190.29: bytes=32 time=38ms TTL=54
+Reply from 185.125.190.29: bytes=32 time=38ms TTL=54
+Reply from 185.125.190.29: bytes=32 time=40ms TTL=54
+
+Ping statistics for 185.125.190.29:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 38ms, Maximum = 40ms, Average = 38ms
