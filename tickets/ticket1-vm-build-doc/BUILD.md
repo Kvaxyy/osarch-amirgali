@@ -159,25 +159,76 @@ ping -n 4 <LINUX_IP>
 
 Both guest-to-guest checks should receive all four replies. If they fail, verify that both adapters use the same `NatNetwork`, that both guests have addresses in the configured subnet, that the Windows rule is enabled, and that the host or network policy is not blocking traffic.
 
+Ubuntu
+```
+amirgali@lab1:~$ ping -c 4 10.0.2.4
+PING 10.0.2.4 (10.0.2.4) 56(84) bytes of data.
+64 bytes from 10.0.2.4: icmp_seq=1 ttl=128 time=1.54 ms
+64 bytes from 10.0.2.4: icmp_seq=2 ttl=128 time=1.37 ms
+64 bytes from 10.0.2.4: icmp_seq=3 ttl=128 time=1.54 ms
+64 bytes from 10.0.2.4: icmp_seq=4 ttl=128 time=1.22 ms
+
+--- 10.0.2.4 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3004ms
+rtt min/avg/max/mdev = 1.216/1.416/1.540/0.133 ms
+```
+Windows
+```
+PS C:\Users\lab02-windows> ping 10.0.2.5
+
+Pinging 10.0.2.5 with 32 bytes of data:
+Reply from 10.0.2.5: bytes=32 time=1ms TTL=64
+Reply from 10.0.2.5: bytes=32 time=1ms TTL=64
+Reply from 10.0.2.5: bytes=32 time<1ms TTL=64
+Reply from 10.0.2.5: bytes=32 time=1ms TTL=64
+
+Ping statistics for 10.0.2.5:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 1ms, Average = 0ms
+```
+
 Then verify outbound internet access from each guest separately. From Ubuntu, run:
 
 ```bash
-ping -c 4 1.1.1.1
-getent hosts example.com
+ping -c 4 ubuntu.com
+
 ```
 
 From Windows PowerShell, run:
 
 ```powershell
-ping -n 4 1.1.1.1
-Resolve-DnsName example.com
+ping ubuntu.com
+
 ```
 
-Record the actual outputs. A successful ping to an IP checks IP connectivity; successful name resolution checks DNS. Some networks block ICMP, so if the IP ping fails, use an approved HTTPS connectivity check and document the command and result instead of claiming that internet access is unavailable.
+The output should look like this: 
 
-**Why:** Inter-guest ping verifies communication between the two guests. Separate IP and DNS checks distinguish general outbound connectivity from name resolution. The existing `evidence/05-ping-between-guests.txt` records successful guest-to-guest pings; it does not show the internet or DNS tests listed above.
+Ubuntu
+```Ubuntu -> Internet
+amirgali@lab1:~$ ping -c 4 ubuntu.com
+PING ubuntu.com (185.125.190.29) 56(84) bytes of data.
+64 bytes from 185.125.190.29: icmp_seq=1 ttl=54 time=38.4 ms
+64 bytes from 185.125.190.29: icmp_seq=2 ttl=54 time=37.9 ms
+64 bytes from 185.125.190.29: icmp_seq=3 ttl=54 time=38.1 ms
+64 bytes from 185.125.190.29: icmp_seq=4 ttl=54 time=38.0 ms
+```
 
-![Bidirectional guest-to-guest ping evidence](evidence/05-ping-between-guests.txt)
+Windows
+```Windows -> Internet 
+PS C:\Users\lab02-windows> ping ubuntu.com
+
+Pinging ubuntu.com [185.125.190.29] with 32 bytes of data:
+Reply from 185.125.190.29: bytes=32 time=39ms TTL=54
+Reply from 185.125.190.29: bytes=32 time=38ms TTL=54
+Reply from 185.125.190.29: bytes=32 time=38ms TTL=54
+Reply from 185.125.190.29: bytes=32 time=40ms TTL=54
+
+Ping statistics for 185.125.190.29:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 38ms, Maximum = 40ms, Average = 38ms
+```
 
 ### Step 12: Take a clean snapshot of each guest
 
@@ -209,4 +260,5 @@ The current evidence directory contains:
 - `evidence/09b-windows-ip.png`
 - `evidence/10a-windows-firewall-rule.png`
 - `evidence/11b-windows-snapshot.png`
+- `evidence/11c-ping-internet`
 
