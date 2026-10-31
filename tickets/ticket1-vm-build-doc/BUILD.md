@@ -4,7 +4,7 @@ This guide describes how to create one Ubuntu Server guest and one Windows 11 gu
 
 ## Before you start
 
-You need a host computer with hardware virtualization enabled, VirtualBox installed, an Ubuntu Server installation ISO, and a Windows 11 installation ISO. Keep the ISO files in a known location. Confirm that the host has enough free RAM and disk space for the two guests and the host OS to run together. Windows 11 installation and activation must comply with the license available to you; choosing “I don't have a product key” does not provide a license.
+You need a host computer with hardware virtualization enabled, VirtualBox installed (you can download it here:https://www.virtualbox.org/wiki/Downloads) , an Ubuntu Server installation ISO (you can download it here: https://ubuntu.com/download/server for amd64, or https://ubuntu.com/download/server/arm for ARM64. Take the current LTS release.), and a Windows 11 installation ISO (you can download it here: https://www.microsoft.com/en-us/evalcenter/download-windows-11-enterprise fill in the short form, and download the ISO — Enterprise, 64-bit, English (United States).). Keep the ISO files in a known location. Confirm that the host has enough free RAM and disk space for the two guests and the host OS to run together. Windows 11 installation and activation must comply with the license available to you; choosing “I don't have a product key” does not provide a license.
 
 This build assigns 4 GB RAM and 2 virtual CPUs to each guest, with dynamically allocated disks capped at 25 GB for Ubuntu and 40 GB for Windows. If your host differs from the one used for this build, reconsider the allocation before proceeding.
 
