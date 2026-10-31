@@ -11,7 +11,7 @@
 
 The request asks for a repeatable, isolated test environment and instructions that another person can follow. It does not specify the host computer's available memory, free disk space, hypervisor, Linux distribution, Windows edition or licensing, whether both guests must run at once, or whether they need internet access and communication with each other. I would clarify those requirements and confirm whether the office network permits virtual-machine networking.
 
-For this build, I assumed the host has 16 GB of RAM and a 475 GB SSD, that VirtualBox is the hypervisor, and that the two guests should be usable together, reach the internet, and communicate for testing. I used Ubuntu Server 26.04.1 LTS and Windows 11, with a shared VirtualBox NAT Network named `NatNetwork`. Confirm the host figures and Windows licensing status before submission; attach evidence for the host figures and network configuration if available.
+For this build, I assumed the host has 16 GB of RAM and a 475 GB SSD, that VirtualBox is the hypervisor, and that the two guests should be usable together, reach the internet, and communicate for testing. I used Ubuntu Server 26.04.1 LTS and Windows 11, with a shared VirtualBox NAT Network named `NatNetwork`. Confirm the host figures and Windows licensing status before submission; attach evidence for the host figures and network configuration.
 
 ### Resource allocation
 
@@ -37,7 +37,6 @@ The detailed numbered procedure, commands, screenshots, and reasons for the buil
 New-NetFirewallRule -DisplayName "Allow ping in (ICMPv4)" -Protocol ICMPv4 -IcmpType 8 -Direction Inbound -Action Allow
 ```
 
-The peer reviewer should follow `BUILD.md` literally and record the first step that is unclear or cannot be completed. Add their feedback under `review/feedback-from-<surname>.md` after the peer review.
 
 ## 4. Evidence
 
