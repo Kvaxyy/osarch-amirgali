@@ -1,32 +1,55 @@
-## 1. Resource Allocation & Calculation
-The host machine has 16 GB of physical RAM and a 475 GB SSD. To ensure the host OS remains completely stable while both guest virtual machines run simultaneously, resources were allocated as follows:
-- **Linux Guest (`lab01-ubuntu` / Ubuntu Server 26.04.1 LTS):** Allocated 4 GB RAM and 25 GB of dynamically allocated virtual disk space. 4 GB of memory and 2 vCPUs provide sufficient performance for testing developer backend services and containers without causing physical host strain.
-- **Windows Guest (`lab02-windows` / Windows 11):** Allocated 4 GB RAM and 40 GB of dynamically allocated virtual disk space. Windows 11 requires a minimum of 4 GB to prevent severe disk paging and performance degradation.
-- **Host Reserve Calculation:** 
-  - RAM: $16\text{ GB (Host)} - (4\text{ GB [Linux]} + 4\text{ GB [Windows]}) = 8\text{ GB}$ reserved strictly for the host OS.
-  - Disk: $475\text{ GB (Host SSD)} - (25\text{ GB [Linux]} + 40\text{ GB [Windows]}) = 410\text{ GB}$ guaranteed free disk overhead (with initial actual disk usage being under 30 GB due to dynamic allocation).
+# Ticket 1 — Test machine for the new developer
 
-## 2. Settings Differing from Default
-- **Network Adapter -> "NAT Network":** Changed from the default isolated "NAT" mode. *Why:* Default NAT prevents virtual machines from discovering or communicating with each other. By placing both guests on a shared "NAT Network" (`NatNetwork`, subnet `10.0.2.0/24`), both VMs retain external internet access while belonging to the same broadcast domain.
-- **Storage -> Dynamically Allocated VDI:** Selected dynamic allocation over fixed-size virtual disks. *Why:* This prevents VirtualBox from immediately reserving 65 GB on the host SSD, consuming disk space only as files are written inside the guests.
-- **Processor -> 2 vCPUs for Both Guests:** Increased from the default 1 vCPU allocation. *Why:* Modern operating systems (especially Windows 11 and compilation tasks on Linux) experience noticeable CPU bottlenecks on a single virtual core; 2 vCPUs per VM provide a responsive environment without oversubscribing the physical host CPU.
+## 1. What was asked
 
-## 3. Network & Visibility Evidence
-Both guests successfully reach the external internet and have verified mutual network visibility:
-- **Assigned IPs:** Windows guest is assigned `10.0.2.4`, Linux guest is assigned `10.0.2.5`.
-- **Inter-Guest Communication:** Bidirectional ICMP communication was verified with 0% packet loss (documented in `evidence/05-ping-between-guests.txt`).
-- **External Internet Access:** Verified via successful DNS resolution and packet exchange to external gateways from both machines.
+> From: Aigerim T. (Office Manager)  
+> Subject: test machine for new dev
+>
+> Hi, we have someone starting on Monday and he needs a test computer set up. Nothing special, just so he can try things without breaking anything. Can you write down how to do it so I can do the next one myself? Thanks
 
-## 4. Problems Encountered and Resolved
-- **Problem:** Initially, the Linux guest (`10.0.2.5`) could not ping the Windows guest (`10.0.2.4`), resulting in 100% packet loss, despite both machines successfully obtaining IP addresses and having outbound internet access.
-- **Resolution:** By default, Windows Defender Firewall drops all unsolicited incoming ICMPv4 echo requests. Instead of disabling the firewall completely, an elevated PowerShell terminal was opened inside the Windows guest and the following targeted inbound rule was executed:
-  ```powershell
-  New-NetFirewallRule -DisplayName "Allow ping in (ICMPv4)" -Protocol ICMPv4 -IcmpType 8 -Direction Inbound -Action Allow
-Immediately after adding this firewall rule, the Windows guest began responding to ping requests, and mutual network reachability was fully established.
+## 2. What was actually needed
 
-## 5. Verification Check list for Peer Reviewer
-- [ ] Both VM installation ISOs are unmounted after installation.
-- [ ] Network adapters are assigned to NAT Network (NatNetwork).
-- [ ] Inbound ICMPv4 firewall rule was executed in Windows PowerShell
-- [ ] Bidirectional ping between 10.0.2.4 and 10.0.2.5 succeeds with 0% packet loss
-- [ ] Snapshot restore point (Fresh Install & Network Configured) is present for the environment
+The request asks for a repeatable, isolated test environment and instructions that another person can follow. It does not specify the host computer's available memory, free disk space, hypervisor, Linux distribution, Windows edition or licensing, whether both guests must run at once, or whether they need internet access and communication with each other. I would clarify those requirements and confirm whether the office network permits virtual-machine networking.
+
+For this build, I assumed the host has 16 GB of RAM and a 475 GB SSD, that VirtualBox is the hypervisor, and that the two guests should be usable together, reach the internet, and communicate for testing. I used Ubuntu Server 26.04.1 LTS and Windows 11, with a shared VirtualBox NAT Network named `NatNetwork`. Confirm the host figures and Windows licensing status before submission; attach evidence for the host figures and network configuration if available.
+
+### Resource allocation
+
+Each guest was assigned 4 GB of RAM and 2 virtual CPUs. If both run simultaneously, they use 8 GB of the host's 16 GB RAM, leaving a nominal 8 GB for the host and other processes. This is an allocation calculation, not a guarantee that the host will remain responsive under every workload.
+
+The Linux virtual disk has a 25 GB maximum and the Windows virtual disk a 40 GB maximum; both use dynamically allocated VDI files. Their combined maximum virtual capacity is 65 GB. Dynamic allocation grows the host files as guest data is written, so `475 - 65 = 410 GB` is only the arithmetic capacity remaining before accounting for the host OS, other files, and actual disk usage. It is not measured free space.
+
+### Non-default settings and reasons
+
+- **2 virtual CPUs per guest:** selected to give each operating system more than one virtual core for ordinary development and setup tasks. Actual suitability depends on the host CPU and workload.
+- **Dynamically allocated VDI disks:** selected so the host files grow with guest data rather than immediately occupying the full configured virtual capacity.
+- **Shared NAT Network (`NatNetwork`):** selected to give both guests outbound connectivity through the host and place them on a shared virtual network for guest-to-guest testing. Unlike separate default NAT adapters, a shared NAT Network supports communication between its attached guests.
+- **Inbound ICMPv4 echo rule on Windows:** added after the initial ping failed, to allow the specific connectivity check without turning off Windows Firewall.
+- **Windows 11 Pro and a local account:** the build document specifies these choices. Verify that the Windows installation is appropriately licensed and that the account setup steps match the Windows installer version being used.
+
+## 3. What I did
+
+I created an Ubuntu Server guest named `lab01-ubuntu` with 4 GB RAM, 2 virtual CPUs, and a 25 GB dynamically allocated VDI disk. I created a Windows 11 guest named `lab02-windows` with 4 GB RAM, 2 virtual CPUs, and a 40 GB dynamically allocated VDI disk. I attached both guests to the same NAT Network, configured Windows to allow inbound ICMPv4 echo requests, checked connectivity in both directions, and took a baseline snapshot of each guest.
+
+The detailed numbered procedure, commands, screenshots, and reasons for the build choices are in [BUILD.md](BUILD.md). The Windows firewall rule used was:
+
+```powershell
+New-NetFirewallRule -DisplayName "Allow ping in (ICMPv4)" -Protocol ICMPv4 -IcmpType 8 -Direction Inbound -Action Allow
+```
+
+The peer reviewer should follow `BUILD.md` literally and record the first step that is unclear or cannot be completed. Add their feedback under `review/feedback-from-<surname>.md` after the peer review.
+
+## 4. Evidence
+
+- [`evidence/01-new-vm-wizard.png`](evidence/01-new-vm-wizard.png) — shows the VM creation wizard and selected initial VM settings.
+- [`evidence/02-disk-settings.png`](evidence/02-disk-settings.png) — shows the virtual disk configuration.
+- [`evidence/03-network-adapter.png`](evidence/03-network-adapter.png) — shows a network adapter configured for the shared NAT Network; capture or add evidence for both guests and the NAT Network subnet/DHCP settings if this image does not show them.
+- [`evidence/04-guest-uname.txt`](evidence/04-guest-uname.txt) — shows the Linux guest's kernel and architecture from `uname -a`.
+- [`evidence/05-ping-between-guests.txt`](evidence/05-ping-between-guests.txt) — shows successful ping checks in both directions between the guests, with no packet loss.
+- [`evidence/06-snapshot-list.png`](evidence/06-snapshot-list.png) — shows the VirtualBox snapshot list.
+
+The current evidence includes the inter-guest ping, but does not demonstrate internet access or DNS resolution from either guest. Add command output from both guests proving those checks before claiming internet connectivity here. Also ensure the screenshots cover each build step as required by the ticket.
+
+## 5. What I would do differently
+
+Before building, I would record the host's actual free memory and free disk space and confirm the required guest operating systems, Windows license, and network policy with the requester. I would capture a screenshot for every significant wizard and installation step, and collect separate evidence for internet access, DNS, both guests' adapter settings, and the NAT Network configuration. That would make the build easier to reproduce and the reported results easier to verify.
