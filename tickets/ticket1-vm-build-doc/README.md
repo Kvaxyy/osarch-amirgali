@@ -59,8 +59,8 @@ The current evidence directory contains:
 - `evidence/09b-windows-ip.png`
 - `evidence/10a-windows-firewall-rule.png`
 - `evidence/11b-windows-snapshot.png`
-
+- `evidence/11c-ping-internet`
 
 ## 5. What I would do differently
 
-Before building, I would record the host's actual free memory and free disk space and confirm the required guest operating systems, Windows license, and network policy with the requester. I would capture a screenshot for every significant wizard and installation step, and collect separate evidence for internet access, DNS, both guests' adapter settings, and the NAT Network configuration. That would make the build easier to reproduce and the reported results easier to verify.
+At first, the Ubuntu VM could not ping the Windows VM, even though both guests had IP addresses on the same NAT Network. I checked that the Windows adapter was enabled and confirmed that the guests could communicate after allowing inbound ICMPv4 echo requests with a targeted Windows Firewall rule. I kept the firewall enabled instead of turning it off completely. After adding the rule, the bidirectional ping test succeeded with no packet loss
