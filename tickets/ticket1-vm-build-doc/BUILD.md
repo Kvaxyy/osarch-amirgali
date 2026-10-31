@@ -53,7 +53,7 @@ After reboot, if the installer asks to remove the installation medium, eject the
 
 If Ubuntu is already installed and you no longer have the installer screens, do not repeat the installation just to obtain screenshots. Instead, capture the running VM and its current **Settings → System**, **Storage**, and **Network** pages, and use the verification evidence in Step 5. These screenshots document the present setup, but they cannot prove which choices were made in the earlier installer. In the report, say that the installation screens were not captured. If this is a build guide intended for another person, retain the written installation instructions so that person can perform a fresh installation.
 
-> **Evidence available:** `evidence/04-guest-uname.txt` and `evidence/05b-guest-ipaddr.png` are post-installation evidence, not installer screenshots. The latter shows `ip addr` and `ip route` from the installed guest.
+![Ubuntu install](evidence/04b-ubuntu-install.png)
 
 ### Step 5: Verify the Ubuntu guest
 
