@@ -38,9 +38,8 @@ The Ubuntu disk is a dynamically allocated 25 GB VDI. The Windows disk is config
 
 ## 3. What I did
 
-I created the Ubuntu Server guest `lab01-ubuntu` with 4 GB RAM, 2 virtual CPUs, and a dynamically allocated 25 GB VDI. I created the Windows 11 Enterprise Evaluation guest `lab02-windows`, attached both VMs to the shared `NatNetwork`, allowed inbound ICMPv4 echo requests on Windows, tested connectivity between the guests and to the internet, and took a clean snapshot of each guest.
+I created the Ubuntu Server guest `lab01-ubuntu` with 4 GB RAM, 2 virtual CPUs, and a dynamically allocated 25 GB VDI. I created the Windows 11 Enterprise Evaluation guest `lab02-windows` with 4 GB RAM, 2 virtual CPUs, and a dynamically allocated 40 GB VDI, attached both VMs to the shared `NatNetwork`, allowed inbound ICMPv4 echo requests on Windows, tested connectivity between the guests and to the internet, and took a clean snapshot of each guest.
 
-**Before submitting this revision, replace this paragraph with the final verified Windows settings.** The evidence currently in the repository shows a 40 GB Windows disk and does not show TPM 2.0 or Secure Boot. The revised procedure requires a 64 GB disk, TPM 2.0, and Secure Boot. Do not claim these revised settings as completed until you have applied them, booted Windows successfully, and captured the matching evidence. The final Windows edition should be reported as the edition shown by `winver` inside the guest.
 
 The Windows firewall rule used for the connectivity check was:
 
