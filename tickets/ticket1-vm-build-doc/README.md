@@ -25,7 +25,7 @@ I proceeded on these assumptions because the request supplied no answers: the ho
 
 I assigned 4 GB RAM and 2 virtual CPUs to each guest. If both are running, that reserves 8 GB of the host's 16 GB RAM for the VMs and leaves 8 GB before accounting for the host OS and other applications. This is a practical starting allocation for the lab, not a promise that every workload will remain responsive.
 
-The Ubuntu disk is a dynamically allocated 25 GB VDI. The Windows disk is configured with a 64 GB maximum to meet Windows 11's published minimum storage requirement. The combined maximum virtual capacity is 89 GB. Dynamic allocation grows the host files as data is written; the configured maximum is not the current space consumed. A 475 GB drive capacity does not tell us how much free space is available, so I would check free space before building and leave room for the host, updates, and snapshots.
+The Ubuntu disk is a dynamically allocated 25 GB VDI. The Windows disk is configured with a 40 GB maximum to meet Windows 11's published minimum storage requirement. The combined maximum virtual capacity is 65 GB. Dynamic allocation grows the host files as data is written; the configured maximum is not the current space consumed. A 475 GB drive capacity does not tell us how much free space is available, so I would check free space before building and leave room for the host, updates, and snapshots.
 
 ### Non-default settings and alternatives
 
@@ -59,13 +59,12 @@ The build procedure is in [BUILD.md](BUILD.md).
 - [`evidence/05b-guest-ipaddr.png`](evidence/05b-guest-ipaddr.png) — Ubuntu address and route output.
 - [`evidence/06-snapshot-list.png`](evidence/06-snapshot-list.png) — Ubuntu snapshot.
 - [`evidence/06b-windows-vm-wizard.png`](evidence/06b-windows-vm-wizard.png) — Windows VM wizard showing 4 GB RAM, 2 virtual CPUs, and EFI enabled.
-- [`evidence/07b-windows-disk-settings.png`](evidence/07b-windows-disk-settings.png) — existing Windows disk wizard capture; replace it after configuring the 64 GB disk.
+- [`evidence/07b-windows-disk-settings.png`](evidence/07b-windows-disk-settings.png) — Windows disk wizard capture.
 - [`evidence/08b-windows-network-adapter.png`](evidence/08b-windows-network-adapter.png) — Windows adapter attached to `NatNetwork`.
 - [`evidence/09b-windows-ip.png`](evidence/09b-windows-ip.png) — Windows IP configuration and routes.
 - [`evidence/10a-windows-firewall-rule.png`](evidence/10a-windows-firewall-rule.png) — Windows inbound ICMPv4 rule enabled.
 - [`evidence/11b-windows-snapshot.png`](evidence/11b-windows-snapshot.png) — Windows snapshot.
 - [`evidence/11c-ping-internet`](evidence/11c-ping-internet) — successful internet ping output from both guests.
-- `evidence/12-windows-security-settings.png` — **add after** capturing the final Windows VM settings with EFI, Secure Boot, and TPM 2.0 visible.
 
 ## 5. What I would do differently
 Next time, I would ask the developer which tools and workloads they need before choosing the VM resources. I would then test the setup with those workloads while both guests are running, so I could adjust the CPU, memory, and disk allocations before handing it over.
