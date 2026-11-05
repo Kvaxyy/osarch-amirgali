@@ -9,55 +9,65 @@
 
 ## 2. What was actually needed
 
-The request asks for a repeatable, isolated test environment and instructions that another person can follow. It does not specify the host computer's available memory, free disk space, hypervisor, Linux distribution, Windows edition or licensing, whether both guests must run at once, or whether they need internet access and communication with each other. I would clarify those requirements and confirm whether the office network permits virtual-machine networking.
+The request is for a repeatable, isolated test environment, not just another computer. “Without breaking anything” is too broad to implement literally: a test can still damage the guest OS, use up disk space, expose data through shared resources, or affect an external service. I interpreted it as a disposable environment whose guest operating systems can be returned to a known clean state. I used separate virtual machines and clean snapshots for that purpose. A snapshot helps roll back a guest; it is not a backup and does not protect the host or external systems.
 
-For this build, I assumed the host has 16 GB of RAM and a 475 GB SSD, that VirtualBox is the hypervisor, and that the two guests should be usable together, reach the internet, and communicate for testing. I used Ubuntu Server 26.04.1 LTS and Windows 11, with a shared VirtualBox NAT Network named `NatNetwork`. Confirm the host figures and Windows licensing status before submission; attach evidence for the host figures and network configuration.
+Before building this for Aigerim, I would ask:
+
+1. Which applications and development tasks must the new developer run, and are both operating systems required?
+2. Which Linux distribution and Windows edition are required by the team's work? Is an evaluation edition acceptable, or does the office have a Windows licence for a VM?
+3. Must the two guests run at the same time? Do they need outbound internet, guest-to-guest communication, or both?
+4. What host computer will run them, how much RAM and free disk space does it have, and which hypervisor is approved by IT?
+5. Does the office network permit virtual-machine traffic, and are there restrictions on bridged networking or inbound connections?
+
+I proceeded on these assumptions because the request supplied no answers: the host has 16 GB RAM and a 475 GB SSD; VirtualBox is available and permitted; the developer needs one Ubuntu Server guest and one Windows 11 guest at the same time; both guests need outbound internet and must be able to reach each other; and the Windows 11 Enterprise Evaluation ISO is acceptable for a temporary course lab. The evaluation ISO is not described as Windows 11 Pro, and this report makes no claim that it supplies a permanent production licence. For an office deployment, IT must provide an edition and licence approved for that use.
 
 ### Resource allocation
 
-Each guest was assigned 4 GB of RAM and 2 virtual CPUs. If both run simultaneously, they use 8 GB of the host's 16 GB RAM, leaving a nominal 8 GB for the host and other processes. This is an allocation calculation, not a guarantee that the host will remain responsive under every workload.
+I assigned 4 GB RAM and 2 virtual CPUs to each guest. If both are running, that reserves 8 GB of the host's 16 GB RAM for the VMs and leaves 8 GB before accounting for the host OS and other applications. This is a practical starting allocation for the lab, not a promise that every workload will remain responsive.
 
-The Linux virtual disk has a 25 GB maximum and the Windows virtual disk a 40 GB maximum; both use dynamically allocated VDI files. Their combined maximum virtual capacity is 65 GB. Dynamic allocation grows the host files as guest data is written, so `475 - 65 = 410 GB` is only the arithmetic capacity remaining before accounting for the host OS, other files, and actual disk usage. It is not measured free space.
+The Ubuntu disk is a dynamically allocated 25 GB VDI. The Windows disk is configured with a 64 GB maximum to meet Windows 11's published minimum storage requirement. The combined maximum virtual capacity is 89 GB. Dynamic allocation grows the host files as data is written; the configured maximum is not the current space consumed. A 475 GB drive capacity does not tell us how much free space is available, so I would check free space before building and leave room for the host, updates, and snapshots.
 
-### Non-default settings and reasons
+### Non-default settings and alternatives
 
-- **2 virtual CPUs per guest:** selected to give each operating system more than one virtual core for ordinary development and setup tasks. Actual suitability depends on the host CPU and workload.
-- **Dynamically allocated VDI disks:** selected so the host files grow with guest data rather than immediately occupying the full configured virtual capacity.
-- **Shared NAT Network (`NatNetwork`):** selected to give both guests outbound connectivity through the host and place them on a shared virtual network for guest-to-guest testing. Unlike separate default NAT adapters, a shared NAT Network supports communication between its attached guests.
-- **Inbound ICMPv4 echo rule on Windows:** added after the initial ping failed, to allow the specific connectivity check without turning off Windows Firewall.
-- **Windows 11 Pro and a local account:** the build document specifies these choices. Verify that the Windows installation is appropriately licensed and that the account setup steps match the Windows installer version being used.
+- **VirtualBox instead of Hyper-V:** VirtualBox was available for this lab and its GUI makes the VM and network settings straightforward to reproduce from screenshots. Hyper-V would be a reasonable alternative on a managed Windows host, especially where IT already administers it, but it would require different instructions and permissions. I chose one hypervisor so the build can be repeated consistently.
+- **Two virtual CPUs per guest:** this gives each guest more than one virtual processor for ordinary setup and development tasks. I would reduce this if the host had fewer available cores or became unresponsive.
+- **Dynamically allocated VDI disks:** these avoid immediately reserving the full virtual capacity on the host. The trade-off is that the host can still run out of space as the guests grow, so free space must be monitored.
+- **Shared NAT Network instead of separate default NAT adapters:** one shared NAT Network gives both guests outbound connectivity through the host and places them on a common virtual network for the required guest-to-guest test. Separate default NAT adapters are simpler for internet access but do not provide the same shared guest network. Bridged networking could put a guest directly on the office LAN, but that exposes it to the LAN and may be blocked by network policy; it was not needed here.
+- **Windows UEFI, Secure Boot, and TPM 2.0:** these settings make the VM meet Windows 11's expected virtual hardware requirements. EFI is enabled in the VM-creation screenshot; TPM 2.0 and Secure Boot must also be enabled and verified in the final VM settings.
+- **A scoped inbound ICMPv4 rule on Windows:** Windows initially did not answer the Linux guest's ping. I allowed echo requests for this lab only and kept Windows Firewall enabled, instead of disabling the firewall. This permits the diagnostic check; it is not a general firewall policy.
 
 ## 3. What I did
 
-I created an Ubuntu Server guest named `lab01-ubuntu` with 4 GB RAM, 2 virtual CPUs, and a 25 GB dynamically allocated VDI disk. I created a Windows 11 guest named `lab02-windows` with 4 GB RAM, 2 virtual CPUs, and a 40 GB dynamically allocated VDI disk. I attached both guests to the same NAT Network, configured Windows to allow inbound ICMPv4 echo requests, checked connectivity in both directions, and took a baseline snapshot of each guest.
+I created the Ubuntu Server guest `lab01-ubuntu` with 4 GB RAM, 2 virtual CPUs, and a dynamically allocated 25 GB VDI. I created the Windows 11 Enterprise Evaluation guest `lab02-windows`, attached both VMs to the shared `NatNetwork`, allowed inbound ICMPv4 echo requests on Windows, tested connectivity between the guests and to the internet, and took a clean snapshot of each guest.
 
-The detailed numbered procedure, commands, screenshots, and reasons for the build choices are in [BUILD.md](BUILD.md). The Windows firewall rule used was:
+**Before submitting this revision, replace this paragraph with the final verified Windows settings.** The evidence currently in the repository shows a 40 GB Windows disk and does not show TPM 2.0 or Secure Boot. The revised procedure requires a 64 GB disk, TPM 2.0, and Secure Boot. Do not claim these revised settings as completed until you have applied them, booted Windows successfully, and captured the matching evidence. The final Windows edition should be reported as the edition shown by `winver` inside the guest.
+
+The Windows firewall rule used for the connectivity check was:
 
 ```powershell
 New-NetFirewallRule -DisplayName "Allow ping in (ICMPv4)" -Protocol ICMPv4 -IcmpType 8 -Direction Inbound -Action Allow
 ```
 
+The build procedure is in [BUILD.md](BUILD.md).
 
 ## 4. Evidence
 
-## Evidence checklist
-
-- `evidence/01-new-vm-wizard.png` — shows the Ubuntu VM creation settings, including the selected ISO, memory, CPU, and disk size.
-- `evidence/02-disk-settings.png` — shows the Ubuntu virtual disk configuration.
-- `evidence/03-network-adapter.png` — shows the Ubuntu VM connected to the `NatNetwork`.
-- `evidence/04-guest-uname.txt` — shows the Linux kernel version and guest architecture.
-- `evidence/04b-ubuntu-install.png` — shows the Ubuntu installer boot menu.
-- `evidence/05-ping-between-guests.txt` — shows successful ping tests between the Linux and Windows guests in both directions.
-- `evidence/05b-guest-ipaddr.png` — shows the Ubuntu guest's IP address and route information.
-- `evidence/06-snapshot-list.png` — shows the Ubuntu VM's `Fresh Install & Network Configured` snapshot.
-- `evidence/06b-windows-vm-wizard.png` — shows the memory and CPU settings selected for the Windows VM.
-- `evidence/07b-windows-disk-settings.png` — shows the Windows virtual disk set to 40 GB with full-size pre-allocation disabled.
-- `evidence/08b-windows-network-adapter.png` — shows the Windows VM connected to the same `NatNetwork`.
-- `evidence/09b-windows-ip.png` — shows the Windows guest's IP address, default gateway, and route table.
-- `evidence/10a-windows-firewall-rule.png` — shows the inbound ICMPv4 firewall rule being created and verified as enabled.
-- `evidence/11b-windows-snapshot.png` — shows the Windows VM's `Fresh Install & Network Configured` snapshot.
-- `evidence/11c-ping-internet` — shows the guests' internet connectivity checks. Replace this path with the actual filename and extension in your evidence folder.
+- [`evidence/01-new-vm-wizard.png`](evidence/01-new-vm-wizard.png) — Ubuntu VM creation settings.
+- [`evidence/02-disk-settings.png`](evidence/02-disk-settings.png) — Ubuntu disk format, allocation type, and maximum size.
+- [`evidence/03-network-adapter.png`](evidence/03-network-adapter.png) — Ubuntu adapter attached to `NatNetwork`.
+- [`evidence/04-guest-uname.txt`](evidence/04-guest-uname.txt) — Linux kernel and architecture, including the `uname -a` command.
+- [`evidence/05-ping-between-guests.txt`](evidence/05-ping-between-guests.txt) — successful ping output in both guest-to-guest directions.
+- [`evidence/05b-guest-ipaddr.png`](evidence/05b-guest-ipaddr.png) — Ubuntu address and route output.
+- [`evidence/06-snapshot-list.png`](evidence/06-snapshot-list.png) — Ubuntu snapshot.
+- [`evidence/06b-windows-vm-wizard.png`](evidence/06b-windows-vm-wizard.png) — Windows VM wizard showing 4 GB RAM, 2 virtual CPUs, and EFI enabled.
+- [`evidence/07b-windows-disk-settings.png`](evidence/07b-windows-disk-settings.png) — existing Windows disk wizard capture; replace it after configuring the 64 GB disk.
+- [`evidence/08b-windows-network-adapter.png`](evidence/08b-windows-network-adapter.png) — Windows adapter attached to `NatNetwork`.
+- [`evidence/09b-windows-ip.png`](evidence/09b-windows-ip.png) — Windows IP configuration and routes.
+- [`evidence/10a-windows-firewall-rule.png`](evidence/10a-windows-firewall-rule.png) — Windows inbound ICMPv4 rule enabled.
+- [`evidence/11b-windows-snapshot.png`](evidence/11b-windows-snapshot.png) — Windows snapshot.
+- [`evidence/11c-ping-internet`](evidence/11c-ping-internet) — successful internet ping output from both guests.
+- `evidence/12-windows-security-settings.png` — **add after** capturing the final Windows VM settings with EFI, Secure Boot, and TPM 2.0 visible.
 
 ## 5. What I would do differently
-
-At first, the Ubuntu VM could not ping the Windows VM, even though both guests had IP addresses on the same NAT Network. I checked that the Windows adapter was enabled and confirmed that the guests could communicate after allowing inbound ICMPv4 echo requests with a targeted Windows Firewall rule. I kept the firewall enabled instead of turning it off completely. After adding the rule, the bidirectional ping test succeeded with no packet loss
+Next time, I would ask the developer which tools and workloads they need before choosing the VM resources. I would then test the setup with those workloads while both guests are running, so I could adjust the CPU, memory, and disk allocations before handing it over.
+Next time I would check the Windows 11 virtual hardware requirements before creating the VM, then take a screenshot of the final firmware, Secure Boot, and TPM settings before installing Windows. That would catch the missing TPM configuration earlier and avoid having to revisit the VM after the first build. I would also confirm the Windows edition and licence with the requester before choosing an evaluation ISO.
