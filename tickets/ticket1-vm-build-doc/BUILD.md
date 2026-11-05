@@ -1,59 +1,53 @@
-# Build Document: Two Test Guests in VirtualBox
+# Build document: Ubuntu and Windows 11 test guests in VirtualBox
 
-This guide describes how to create one Ubuntu Server guest and one Windows 11 guest in Oracle VM VirtualBox, connect them to the same NAT Network, check guest-to-guest connectivity, and save a clean snapshot of each guest. The exact wizard labels can differ slightly between VirtualBox releases.
+This procedure creates two virtual machines on one host, connects them to a shared NAT Network, verifies internet and guest-to-guest connectivity, and takes a clean snapshot of each guest. It is written for Oracle VM VirtualBox 7.0.20; button names can vary slightly in other releases.
 
 ## Before you start
 
-You need a host computer with hardware virtualization enabled, VirtualBox installed (you can download it here:https://www.virtualbox.org/wiki/Downloads) , an Ubuntu Server installation ISO (you can download it here: https://ubuntu.com/download/server for amd64, or https://ubuntu.com/download/server/arm for ARM64. Take the current LTS release.), and a Windows 11 installation ISO (you can download it here: https://www.microsoft.com/en-us/evalcenter/download-windows-11-enterprise fill in the short form, and download the ISO — Enterprise, 64-bit, English (United States).). Keep the ISO files in a known location. Confirm that the host has enough free RAM and disk space for the two guests and the host OS to run together. Windows 11 installation and activation must comply with the license available to you; choosing “I don't have a product key” does not provide a license.
+Download VirtualBox from [Oracle's VirtualBox downloads page](https://www.virtualbox.org/wiki/Downloads), Ubuntu Server from [ubuntu.com/download/server](https://ubuntu.com/download/server), and Windows 11 Enterprise Evaluation from [Microsoft Evaluation Center](https://www.microsoft.com/en-us/evalcenter/download-windows-11-enterprise). Use the ISO architecture that matches the host. This build uses x86-64 guests.
 
-This build assigns 4 GB RAM and 2 virtual CPUs to each guest, with dynamically allocated disks capped at 25 GB for Ubuntu and 40 GB for Windows. If your host differs from the one used for this build, reconsider the allocation before proceeding.
+Confirm hardware virtualization is enabled in the host firmware. On the host, check available RAM and free disk space before creating the VMs. This build assigns 4 GB RAM to each guest and sets virtual disk maximums of 25 GB for Ubuntu and 64 GB for Windows; keep additional free space for the host OS, applications, updates, and snapshots. The 
+40 GB Windows disk matches Microsoft's published minimum storage requirement. An evaluation ISO is for evaluation under Microsoft's terms; use an edition and licence approved by IT for a real employee workstation.
 
+Do not use production credentials or connect test software to production services. A snapshot can return a guest to its saved state, but it does not protect the host, external systems, or files stored outside that guest.
 
-## Part 1: Ubuntu Server guest
+## Part 1: Ubuntu Server
 
-### Step 1: Create the Ubuntu virtual machine
+### Step 1 — Create the Ubuntu VM
 
-Open VirtualBox and select **New**. Name the machine `lab01-ubuntu`, choose **Linux** and **Ubuntu (64-bit)**, and select the Ubuntu Server ISO when prompted. Assign **4096 MB** of memory and **2 CPUs**. Choose **Skip Unattended Installation** so that the OS installer can be followed manually, then continue to the virtual disk setup.
+Open VirtualBox Manager, select **New**, name the VM `lab01-ubuntu`, choose **Linux → Ubuntu (64-bit)**, and select the Ubuntu Server ISO. Assign **4096 MB** RAM and **2 CPUs**, then choose **Skip Unattended Installation**.
 
-**Why:** The 4 GB and 2 CPU allocation is the configuration used for this lab. The unattended installer is skipped so the account and installation choices can be made explicitly and documented.
+**Why:** A manually followed installer makes the account and OS choices visible and repeatable. The 4 GB/2 CPU allocation is the lab's starting point and leaves half of the host's 16 GB RAM unassigned when both VMs run.
 
 ![Ubuntu VM creation wizard](evidence/01-new-vm-wizard.png)
 
+### Step 2 — Create the Ubuntu disk
 
-### Step 2: Create the Ubuntu virtual disk
+Choose **Create a Virtual Hard Disk Now**, select **VDI**, choose **Dynamically allocated**, and set the maximum size to **25 GB**. Finish the VM wizard.
 
-Choose **Create a Virtual Hard Disk Now**. Select **VDI (VirtualBox Disk Image)**, choose **Dynamically allocated**, set the maximum size to **25 GB**, and finish creating the VM.
+**Why:** The VDI grows as Ubuntu writes data, up to the configured limit, so the host does not reserve all 25 GB immediately. Dynamic allocation still requires monitoring host free space.
 
-**Why:** A dynamically allocated disk file grows as the guest writes data, up to its 25 GB limit. It does not guarantee that a particular amount of host disk space will remain free.
+![Ubuntu disk settings](evidence/02-disk-settings.png)
 
-![Virtual disk settings](evidence/02-disk-settings.png)
+### Step 3 — Create the shared NAT Network and attach Ubuntu
 
+In VirtualBox Manager, open **Tools → Network → NAT Networks**. Create or select an enabled network named `NatNetwork`, enable DHCP, and record the subnet and gateway shown in the manager. Save it. Select `lab01-ubuntu`, open **Settings → Network → Adapter 1**, enable the adapter, choose **NAT Network**, select `NatNetwork`, and save.
 
-### Step 3: Create or select the shared NAT Network
+**Why:** A shared NAT Network gives the guest outbound access through the host and lets both guests communicate on the same virtual network. Separate default NAT adapters provide outbound access but do not create this shared guest network; bridged mode would expose guests directly to the physical LAN.
 
-In the VirtualBox Manager, open **Tools** and find **Network** or **Network Manager** (the name varies by version). Open the **NAT Networks** tab and create a network if one does not already exist. Name it `NatNetwork`, enable the network and its DHCP server, and note the subnet and gateway shown by VirtualBox. Do not assume a particular subnet unless the Network Manager confirms it. Save the network settings.
+![Ubuntu network adapter](evidence/03-network-adapter.png)
 
-Select `lab01-ubuntu`, open **Settings → Network → Adapter 1**, enable the adapter, set **Attached to** to **NAT Network**, and select `NatNetwork`. Save the VM settings.
+### Step 4 — Install Ubuntu Server
 
-**Why:** Both guests need to attach to the same NAT Network to test communication with one another while using the host for outbound connectivity. A standard NAT adapter on each VM is not the same shared network.
+Start `lab01-ubuntu` and follow the Ubuntu Server installer. Choose the required language and keyboard, keep the default network configuration if DHCP succeeds, use the default guided partitioning on the empty virtual disk, and create a dedicated lab account. In this build the account is `amirgali` and the hostname is `lab1`; set a unique password locally and never include it in the repository. Complete installation and reboot. Eject the ISO from **Devices → Optical Drives** if prompted, then confirm it is no longer mounted under **Settings → Storage**.
 
-![Ubuntu network adapter settings](evidence/03-network-adapter.png)
+**Why:** Ubuntu is installed to the VM's virtual disk, so the host operating system is untouched. A dedicated guest account keeps lab activity separate from host accounts.
 
-### Step 4: Install Ubuntu Server (or document the already-installed guest)
+![Ubuntu installer](evidence/04b-ubuntu-install.png)
 
-Select `lab01-ubuntu` and click **Start**. Follow the Ubuntu Server installer. Choose the language, keyboard layout, and network configuration appropriate for the lab. Use the default partitioning of the empty virtual disk unless the assignment requires another layout. Create a non-shared lab account; the original build used username `amirgali` and hostname `lab1`. Set a unique password locally and do not publish it in this document or commit it to GitHub. Finish installation and reboot when prompted.
+### Step 5 — Verify Ubuntu's OS and network
 
-After reboot, if the installer asks to remove the installation medium, eject the ISO using the VirtualBox **Devices → Optical Drives** menu, then press Enter. In the VM's **Settings → Storage**, confirm the installer ISO is no longer mounted so that the VM boots from its virtual disk.
-
-**Why:** The VM has its own virtual disk, so the OS can be installed without changing the host. A unique local password avoids exposing credentials in a public build guide.
-
-If Ubuntu is already installed and you no longer have the installer screens, do not repeat the installation just to obtain screenshots. Instead, capture the running VM and its current **Settings → System**, **Storage**, and **Network** pages, and use the verification evidence in Step 5. These screenshots document the present setup, but they cannot prove which choices were made in the earlier installer. In the report, say that the installation screens were not captured. If this is a build guide intended for another person, retain the written installation instructions so that person can perform a fresh installation.
-
-![Ubuntu install](evidence/04b-ubuntu-install.png)
-
-### Step 5: Verify the Ubuntu guest
-
-Log in to Ubuntu and run:
+Log in and run:
 
 ```bash
 uname -a
@@ -61,204 +55,111 @@ ip addr
 ip route
 ```
 
-Confirm that `uname -a` reports a Linux kernel and `x86_64`, and record the guest's actual IPv4 address and default route. The address can differ from `10.0.2.5` if the NAT Network has a different subnet or DHCP allocation. `evidence/04-guest-uname.txt` contains `uname -a`; `evidence/05b-guest-ipaddr.png` shows `ip addr` and `ip route`, including address `10.0.2.5` and default route `10.0.2.1`.
+Record the actual address and default route; do not substitute example values. The expected evidence in this build shows the Linux guest at `10.0.2.5/24` with a default route through `10.0.2.1`.
 
-**Why:** These commands confirm the guest booted and show its real network configuration. Recording actual output makes later network checks reproducible.
+**Why:** These commands confirm that the guest booted and received a usable network configuration. Recording the actual address provides the target for the Windows-to-Linux connectivity check.
 
-The Linux kernel output is in `evidence/04-guest-uname.txt`. The address and route output is shown below:
+![Ubuntu address and routes](evidence/05b-guest-ipaddr.png)
 
-![Linux guest IP address and routes](evidence/05b-guest-ipaddr.png)
+The `uname -a` output is in [`evidence/04-guest-uname.txt`](evidence/04-guest-uname.txt).
 
-## Part 2: Windows 11 guest
+## Part 2: Windows 11 Enterprise Evaluation
 
-### Step 6: Create the Windows virtual machine
+### Step 6 — Create the Windows VM with UEFI
 
-In VirtualBox Manager, select **New**. Name the machine `lab02-windows`, choose **Microsoft Windows** and **Windows 11 (64-bit)**, and select the Windows 11 ISO. Assign **4096 MB** of memory and **2 CPUs**. Choose **Skip Unattended Installation** to follow the installer manually, then continue to disk setup.
+Select **New**, name the VM `lab02-windows`, choose **Microsoft Windows → Windows 11 (64-bit)**, and select the Windows 11 Enterprise Evaluation ISO. Assign **4096 MB** RAM and **2 CPUs**. In the hardware page, leave **Enable EFI** checked, then choose **Skip Unattended Installation**.
 
-**Why:** These are the resource settings used for this lab. Skipping unattended setup makes it possible to document the installation choices and account setup.
+**Why:** The selected ISO supplies the Enterprise Evaluation edition. UEFI is required for a standard Windows 11 VM configuration; the screenshot records that EFI is enabled in the wizard.
 
-![Windows VM wizard hardware settings](evidence/06b-windows-vm-wizard.png)
+![Windows VM wizard with EFI enabled](evidence/06b-windows-vm-wizard.png)
 
-
-### Step 7: Create the Windows virtual disk
+### Step 7 — Create the Windows disk
 
 Choose **Create a Virtual Hard Disk Now**, select **VDI**, choose **Dynamically allocated**, and set the maximum size to **40 GB**. Finish creating the VM.
 
-**Why:** The 40 GB virtual capacity is the limit selected for this lab. Dynamic allocation lets the host file grow with guest data, but the guest still cannot use more than the configured maximum.
+**Why:** Microsoft lists 40 GB as the minimum storage device size for Windows 11. Dynamic allocation avoids reserving the full maximum at once, while the guest can grow only up to the configured limit.
 
-![Windows virtual disk settings](evidence/07b-windows-disk-settings.png)
+![Windows disk settings](evidence/07b-windows-disk-settings.png)
 
+### Step 8 — Enable and verify Secure Boot and TPM 2.0
 
-### Step 8: Connect Windows to `NatNetwork`
+Keep `lab02-windows` powered off. Open **Settings → System → Motherboard**. Confirm **Enable EFI** is selected, enable **Secure Boot**, choose **TPM 2.0** in the TPM setting, then save the VM settings. Reopen the settings and verify that all three values remain selected. Capture the final page as `evidence/12-windows-security-settings.png`.
 
-Select `lab02-windows`, open **Settings → Network → Adapter 1**, enable the adapter, set **Attached to** to **NAT Network**, and select the same `NatNetwork` used by Ubuntu. Save the settings. Confirm both VMs are attached to that same named network.
+**Why:** Windows 11 expects UEFI firmware, Secure Boot capability, and TPM 2.0. Verifying the saved settings before installation prevents a successful install from hiding a missing virtual security device.
 
-**Why:** Using the same NAT Network allows the guests to communicate through the virtual network. The actual IP addresses depend on the subnet and DHCP server configured in Step 3.
+![Windows EFI, Secure Boot, and TPM settings](evidence/12-windows-security-settings.png)
 
-The Ubuntu adapter screenshot is `evidence/03-network-adapter.png`. The Windows adapter screenshot below shows `lab02-windows` attached to `NatNetwork`:
+### Step 9 — Attach Windows to the same NAT Network
 
-![Windows network adapter settings](evidence/08b-windows-network-adapter.png)
+Open `lab02-windows` **Settings → Network → Adapter 1**, enable the adapter, choose **NAT Network**, select `NatNetwork`, and save. Compare the Windows and Ubuntu adapter settings to confirm both use the same network name.
 
+**Why:** Attaching both guests to the same NAT Network is what makes their guest-to-guest test meaningful. NAT also keeps each guest from appearing as a separate physical machine on the office LAN.
 
-### Step 9: Install and verify Windows
+![Windows adapter attached to NatNetwork](evidence/08b-windows-network-adapter.png)
 
-Start `lab02-windows` and follow Windows Setup. Select the appropriate language and keyboard. When asked for a product key, enter a valid key if you have one; otherwise, you may choose **I don't have a product key** only if permitted for your intended installation. Select the Windows edition that matches the license available to you. Choose **Custom: Install Windows only** and install to the unallocated virtual disk. Complete the out-of-box setup and create a local account if that option is available in your installer version. Use a unique password and do not include it in this document.
+### Step 10 — Install Windows and verify its edition and address
 
-After setup and reboot, eject the ISO from **Devices → Optical Drives** if prompted. In VM **Settings → Storage**, confirm the ISO is no longer mounted.
-
-Open PowerShell and run:
+Start `lab02-windows` and follow Windows Setup. Select the language and keyboard, install to the unallocated virtual disk, and complete the first-run setup. Select the edition provided by the Enterprise Evaluation ISO. Use a unique local lab password if the installer offers that option. After reboot, eject the ISO if prompted and confirm it is no longer mounted under **Settings → Storage**. Run `winver` to record the installed edition, then open PowerShell and run:
 
 ```powershell
 ipconfig
 route print -4
 ```
 
-Record the actual IPv4 address and default route. Do not assume the address is `10.0.2.4` unless the output confirms it.
+Record the actual address and gateway. The existing evidence shows Windows at `10.0.2.4` with a route through `10.0.2.1`. Capture the relevant installer or `winver` screen as `evidence/09a-windows-edition.png` so the chosen edition is clear.
 
-**Why:** The selected edition and activation status must match the available license. Checking the real IP configuration avoids relying on example addresses that may not match the configured NAT Network.
+**Why:** `winver` verifies which edition was installed instead of inferring it from the ISO filename. `ipconfig` and `route print` provide the address needed for repeatable connectivity checks.
 
-The current Windows network evidence shows IPv4 address `10.0.2.4`, subnet mask, default gateway, and route table:
+![Windows IP configuration](evidence/09b-windows-ip.png)
 
-![Windows IP configuration and routes](evidence/09b-windows-ip.png)
+## Part 3: Network checks and recovery points
 
+### Step 11 — Allow only the Windows ping check
 
-## Part 3: Connectivity checks and snapshots
-
-### Step 10: Allow the ping test through Windows Firewall
-
-In the Windows guest, open **Windows Terminal (Admin)** or **PowerShell (Admin)**. Run this command to add an inbound rule for ICMPv4 echo requests:
+In the Windows guest, open **Windows Terminal (Admin)** or **PowerShell (Admin)** and run:
 
 ```powershell
 New-NetFirewallRule -DisplayName "Allow ping in (ICMPv4)" -Protocol ICMPv4 -IcmpType 8 -Direction Inbound -Action Allow
-```
-
-If the rule already exists, inspect it before creating a duplicate. Keep Windows Firewall enabled. To inspect the rule, run:
-
-```powershell
 Get-NetFirewallRule -DisplayName "Allow ping in (ICMPv4)"
 ```
 
-**Why:** Windows Firewall may block incoming echo requests by default. This rule permits the specific diagnostic traffic needed for this lab without disabling the firewall. On a managed device, follow the administrator's network policy.
+If a rule with that name already exists, inspect it rather than creating a duplicate. Keep Windows Firewall enabled.
 
-![Windows inbound ICMP firewall rule](evidence/10a-windows-firewall-rule.png)
+**Why:** Windows may block inbound echo requests by default. This narrowly scoped rule permits the lab's connectivity check without turning off the firewall.
 
+![Windows inbound ICMPv4 rule](evidence/10a-windows-firewall-rule.png)
 
-### Step 11: Test guest-to-guest and internet connectivity
+### Step 12 — Test guest-to-guest and internet connectivity
 
-First, use the actual addresses recorded in Steps 5 and 9. From Ubuntu, replace `<WINDOWS_IP>` with the Windows guest's address and run:
-
-```bash
-ping -c 4 <WINDOWS_IP>
-```
-
-From Windows PowerShell, replace `<LINUX_IP>` with the Ubuntu guest's address and run:
-
-```powershell
-ping -n 4 <LINUX_IP>
-```
-
-Both guest-to-guest checks should receive all four replies. If they fail, verify that both adapters use the same `NatNetwork`, that both guests have addresses in the configured subnet, that the Windows rule is enabled, and that the host or network policy is not blocking traffic.
-
-Ubuntu
-```
-amirgali@lab1:~$ ping -c 4 10.0.2.4
-PING 10.0.2.4 (10.0.2.4) 56(84) bytes of data.
-64 bytes from 10.0.2.4: icmp_seq=1 ttl=128 time=1.54 ms
-64 bytes from 10.0.2.4: icmp_seq=2 ttl=128 time=1.37 ms
-64 bytes from 10.0.2.4: icmp_seq=3 ttl=128 time=1.54 ms
-64 bytes from 10.0.2.4: icmp_seq=4 ttl=128 time=1.22 ms
-
---- 10.0.2.4 ping statistics ---
-4 packets transmitted, 4 received, 0% packet loss, time 3004ms
-rtt min/avg/max/mdev = 1.216/1.416/1.540/0.133 ms
-```
-Windows
-```
-PS C:\Users\lab02-windows> ping 10.0.2.5
-
-Pinging 10.0.2.5 with 32 bytes of data:
-Reply from 10.0.2.5: bytes=32 time=1ms TTL=64
-Reply from 10.0.2.5: bytes=32 time=1ms TTL=64
-Reply from 10.0.2.5: bytes=32 time<1ms TTL=64
-Reply from 10.0.2.5: bytes=32 time=1ms TTL=64
-
-Ping statistics for 10.0.2.5:
-    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
-Approximate round trip times in milli-seconds:
-    Minimum = 0ms, Maximum = 1ms, Average = 0ms
-```
-
-Then verify outbound internet access from each guest separately. From Ubuntu, run:
+Use the actual addresses recorded in Steps 5 and 10. From Ubuntu, run:
 
 ```bash
+ping -c 4 10.0.2.4
 ping -c 4 ubuntu.com
-
 ```
 
 From Windows PowerShell, run:
 
 ```powershell
-ping ubuntu.com
-
+ping -n 4 10.0.2.5
+ping -n 4 ubuntu.com
 ```
 
-The output should look like this: 
+Record complete command output. The evidence files show four replies in both guest-to-guest directions and successful name-based pings from both guests. A failed ping alone does not prove the internet is unavailable because some networks filter ICMP; record the actual result and use an approved HTTPS check if needed.
 
-Ubuntu
-```Ubuntu -> Internet
-amirgali@lab1:~$ ping -c 4 ubuntu.com
-PING ubuntu.com (185.125.190.29) 56(84) bytes of data.
-64 bytes from 185.125.190.29: icmp_seq=1 ttl=54 time=38.4 ms
-64 bytes from 185.125.190.29: icmp_seq=2 ttl=54 time=37.9 ms
-64 bytes from 185.125.190.29: icmp_seq=3 ttl=54 time=38.1 ms
-64 bytes from 185.125.190.29: icmp_seq=4 ttl=54 time=38.0 ms
-```
+**Why:** The first pair checks guest-to-guest communication; the second pair checks outbound access and DNS name resolution. Keeping the outputs as text makes the result easier to inspect than a screenshot of a terminal.
 
-Windows
-```Windows -> Internet 
-PS C:\Users\lab02-windows> ping ubuntu.com
+- [Bidirectional guest ping output](evidence/05-ping-between-guests.txt)
+- [Internet ping output from both guests](evidence/11c-ping-internet)
 
-Pinging ubuntu.com [185.125.190.29] with 32 bytes of data:
-Reply from 185.125.190.29: bytes=32 time=39ms TTL=54
-Reply from 185.125.190.29: bytes=32 time=38ms TTL=54
-Reply from 185.125.190.29: bytes=32 time=38ms TTL=54
-Reply from 185.125.190.29: bytes=32 time=40ms TTL=54
+### Step 13 — Take and restore a clean snapshot
 
-Ping statistics for 185.125.190.29:
-    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
-Approximate round trip times in milli-seconds:
-    Minimum = 38ms, Maximum = 40ms, Average = 38ms
-```
+Shut down each guest cleanly. In VirtualBox Manager, select `lab01-ubuntu`, open **Snapshots**, choose **Take**, and name the snapshot `Fresh Install & Network Configured`. Repeat for `lab02-windows`. Verify that each VM has the named snapshot and capture both snapshot lists.
 
-### Step 12: Take a clean snapshot of each guest
+To roll a guest back, shut it down, open its **Snapshots** view, select `Fresh Install & Network Configured`, and choose **Restore**. Restoring discards changes made to that guest's disks since the snapshot; take a separate snapshot first if you need to preserve the current guest state. Confirm the restore, then start the guest and verify that it boots. A snapshot is a rollback point, not an independent backup.
 
-Shut down both guests cleanly. In VirtualBox Manager, select `lab01-ubuntu`, open **Snapshots**, choose **Take**, and name the snapshot `Fresh Install & Network Configured`. Repeat for `lab02-windows`. Confirm the snapshot list shows a snapshot under each VM.
+**Why:** A clean snapshot makes it possible to return the test guest to its known starting state after a failed experiment. Explaining restoration and its data-loss effect makes the “without breaking anything” expectation concrete.
 
-**Why:** Separate snapshots preserve a known clean state for each VM. A snapshot is a recovery point, not a substitute for a backup of important data.
+![Ubuntu snapshot](evidence/06-snapshot-list.png)
 
-![VirtualBox snapshot list](evidence/06-snapshot-list.png)
-
-`evidence/06-snapshot-list.png` shows the Ubuntu VM and its `Fresh Install & Network Configured` snapshot. The additional screenshot below shows the Windows VM and a snapshot with the same name:
-
-![Windows VM snapshot](evidence/11b-windows-snapshot.png)
-
-## Evidence checklist
-
-The current evidence directory contains:
-
-- `evidence/01-new-vm-wizard.png`
-- `evidence/02-disk-settings.png`
-- `evidence/03-network-adapter.png`
-- `evidence/04-guest-uname.txt`
-- `evidence/04b-ubuntu-install.png`
-- `evidence/05-ping-between-guests.txt`
-- `evidence/05b-guest-ipaddr.png`
-- `evidence/06-snapshot-list.png`
-- `evidence/06b-windows-vm-wizard.png`
-- `evidence/07b-windows-disk-settings.png`
-- `evidence/08b-windows-network-adapter.png`
-- `evidence/09b-windows-ip.png`
-- `evidence/10a-windows-firewall-rule.png`
-- `evidence/11b-windows-snapshot.png`
-- `evidence/11c-ping-internet`
-
+![Windows snapshot](evidence/11b-windows-snapshot.png)
