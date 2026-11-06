@@ -101,7 +101,7 @@ Raw command output: [`evidence/windows-specs.txt`](evidence/windows-specs.txt) a
 | --- | --- | --- |
 | CPU model | `Get-CimInstance Win32_Processor`: Intel Core i5-13420H | `lscpu`: Intel Core i5-13420H |
 | Cores / threads | `Get-CimInstance Win32_Processor`: 8 cores / 12 logical processors | `lscpu`: 2 CPUs, 2 cores, 1 thread per core (2 vCPUs assigned) |
-| Total memory | Not recorded | `free -h`: 3.3 GiB total |
+| Total memory | `Get-CimInstance Win32_ComputerSystemorded`: 15,73 GB | `free -h`: 3.3 GiB total |
 | Memory modules and speed | `Get-CimInstance Win32_PhysicalMemory`: two 8 GiB modules, 3200 MT/s; SMBIOS reports DDR4 | `sudo dmidecode -t memory`: SMBIOS 2.5 detected, but no module details were returned |
 | Disk model and type | `Get-PhysicalDisk`: SAMSUNG MZAL4512HBLU-00BL2, SSD, NVMe, 512 GB | `lsblk`: `VBOX HARDDISK`, 25 GB, virtual SATA disk |
 | Free space | `Get-Volume C`: 45.44 GB free of 475.75 GB | `df -h /`: 7.1 GB free on the 11 GB root filesystem |
