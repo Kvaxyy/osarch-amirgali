@@ -1,7 +1,6 @@
 # Lab 3 — Teardown and the same machine from the command line
 
-Pair: Amirgali A.
-+ Aiganym K. · Date: 6 November 2026
+Pair: Amirgali A. + Aiganym K. · Date: 6 November 2026
 
 ## Part 1 — Ten parts
 
