@@ -94,16 +94,16 @@ Still needs: a separate compatible PSU (the single RM750e is allocated to Build 
 
 Raw command output: [`evidence/windows-specs.txt`](evidence/windows-specs.txt) and [`evidence/linux-specs.txt`](evidence/linux-specs.txt). 
 | Fact | Windows (PowerShell) | Linux (Ubuntu VM) |
-| --- | --- | --- | --- |
+| --- | --- | --- |
 | CPU model | `Get-CimInstance Win32_Processor`: Intel Core i5-13420H | `lscpu`: Intel Core i5-13420H |
-| Cores / threads | `Get-CimInstance Win32_Processor`: 8 cores / 12 logical processors | `lscpu`: 2 CPUs, 2 cores, 1 thread/core (2 vCPUs assigned) |
-| Total memory | Not recorded by the saved commands | `free -h`: 3.3 GiB total |
-| Memory modules and speed | `Get-CimInstance Win32_PhysicalMemory`: two 8 GiB entries, 3200 MT/s; SMBIOS types report DDR4 | `sudo dmidecode -t memory`: SMBIOS 2.5 detected, no module detail returned |
-| Disk model and type | `Get-PhysicalDisk`: SAMSUNG MZAL4512HBLU-00BL2, SSD, NVMe, 512 GB | `lsblk`: `VBOX HARDDISK`, 25 GB, SATA virtual disk |
-| Free space | `Get-Volume C`: 45.44 GB remaining of 475.75 GB | `df -h /`: 7.1 GB available on 11 GB root filesystem |
+| Cores / threads | `Get-CimInstance Win32_Processor`: 8 cores / 12 logical processors | `lscpu`: 2 CPUs, 2 cores, 1 thread per core (2 vCPUs assigned) |
+| Total memory | Not recorded in the saved output | `free -h`: 3.3 GiB total |
+| Memory modules and speed | `Get-CimInstance Win32_PhysicalMemory`: two 8 GiB modules, 3200 MT/s; SMBIOS reports DDR4 | `sudo dmidecode -t memory`: SMBIOS 2.5 detected, but no module details were returned |
+| Disk model and type | `Get-PhysicalDisk`: SAMSUNG MZAL4512HBLU-00BL2, SSD, NVMe, 512 GB | `lsblk`: `VBOX HARDDISK`, 25 GB, virtual SATA disk |
+| Free space | `Get-Volume C`: 45.44 GB free of 475.75 GB | `df -h /`: 7.1 GB free on the 11 GB root filesystem |
 | Architecture | `$env:PROCESSOR_ARCHITECTURE`: AMD64 | `uname -m`: x86_64 |
 
-Windows reports the host laptop's full 8 cores and two physical 8 GiB memory entries, while Ubuntu reports a virtual machine with only 2 vCPUs and 3.3 GiB RAM. The VM also exposes a generic 25 GB `VBOX HARDDISK` instead of the host's 512 GB Samsung NVMe, and its virtual disk appears as SATA. Both systems report the same Intel i5-13420H model and x86-64 architecture, showing that the hypervisor passes through some CPU identity while limiting or virtualizing other hardware.
+Windows reports the host laptop’s full 8 cores and two physical 8 GiB memory modules, while Ubuntu reports a virtual machine with 2 vCPUs and 3.3 GiB of RAM. The VM also shows a generic 25 GB VBOX HARDDISK instead of the host’s 512 GB Samsung NVMe drive. Both systems report the same Intel Core i5-13420H model and x86-64 architecture, so the hypervisor passes through some CPU information while presenting limited or virtualized hardware
 
 ## What did not work the first time
 
