@@ -16,7 +16,7 @@ Product photos are saved under [`evidence/photos/`](evidence/photos/). Captions 
 
 ![Intel Core i5-13400](evidence/photos/Intel-Core%20i5-13400.png)
 
-13th-generation desktop CPU with 10 cores (6 P-cores + 4 E-cores) and 16 threads, LGA1700, 65 W processor base power, DDR4 or DDR5 depending on motherboard. It fits the MSI PRO B760M-A WIFI DDR4 and connects to DDR4 UDIMMs in that board. Limits: LGA1700; this DDR4 motherboard cannot take DDR5. Intel lists Laminar RM1 in the box with the boxed i5-13400; a tray/OEM processor may not include a cooler. [Intel specifications](https://www.intel.com/content/www/us/en/products/sku/230495/intel-core-i513400-processor-20m-cache-up-to-4-60-ghz.html) 
+13th-generation desktop CPU with 10 cores (6 P-cores + 4 E-cores) and 16 threads, LGA1700, 65 W processor base power, DDR4 or DDR5 depending on motherboard. It fits the MSI PRO B760M-A WIFI DDR4 and connects to DDR4 UDIMMs in that board. Limits: LGA1700; this DDR4 motherboard cannot take DDR5. Intel lists Laminar RM1 in the box with the boxed i5-13400; a tray/OEM processor may not include a cooler. [Intel specifications](https://www.intel.com/content/www/us/en/products/sku/230495/intel-core-i513400-processor-20m-cache-up-to-4-60-ghz.html) · [Intel boxed contents](https://www.intel.com/content/www/us/en/support/articles/000095154/processors.html)
 
 ### ASUS PRIME B650M-A
 
@@ -28,7 +28,8 @@ Micro-ATX motherboard with AMD B650 chipset and AM5 socket. It connects to Ryzen
 
 ![MSI PRO B760M-A WIFI DDR4](evidence/photos/MSI-PRO-B760M-A-WIFI-DDR4.png)
 
-Micro-ATX motherboard with Intel B760 chipset and LGA1700 socket. It supports Intel 12th/13th/14th-generation CPUs, has four DDR4 slots (up to 128 GB), two M.2 sockets and four SATA ports. The i5-13400 is a 13th-generation LGA1700 match. Limits: DDR4 only; a DDR5 module cannot fit. [MSI specifications](https://www.msi.com/Motherboard/PRO-B760M-A-WIFI-DDR4/Specification) 
+Micro-ATX motherboard with Intel B760 chipset and LGA1700 socket. It supports Intel 12th/13th/14th-generation CPUs, has four DDR4 slots (up to 128 GB), two M.2 sockets and four SATA ports. The i5-13400 is a 13th-generation LGA1700 match. Limits: DDR4 only; a DDR5 module cannot fit. [MSI specifications](https://www.msi.com/Motherboard/PRO-B760M-A-WIFI-DDR4/Specification) · [MSI CPU compatibility](https://www.msi.com/Motherboard/PRO-B760M-A-WIFI-DDR4/support#cpu)
+
 ### Kingston FURY Beast DDR5-5600, 16 GB
 
 ![Kingston FURY Beast DDR5-5600](evidence/photos/Kingston-FURY-Beast-DDR5-5600-16%20GB.png)
@@ -59,9 +60,11 @@ Micro-ATX motherboard with Intel B760 chipset and LGA1700 socket. It supports In
 
 750 W ATX power supply, fully modular, 80 PLUS Gold efficiency for the listed revision. It supplies the motherboard through 24-pin ATX and CPU EPS 8-pin power cables, plus SATA power for drives and PCIe power for a graphics card. Limits: total system demand must stay within 750 W; the PSU also needs to fit the case and have the required connectors. [CORSAIR specifications](https://www.corsair.com/us/en/p/psu/cp-9020262-na/rme-series-rm750e-fully-modular-low-noise-atx-power-supply-cp-9020262-na)
 
-### Stock CPU cooler
+### Intel Laminar RM1 stock CPU cooler
 
-The assignment's parts list names a stock cooler without a separate model/photo. AMD identifies the Ryzen 5 7600's thermal solution as Wraith Stealth; Intel includes Laminar RM1 with the boxed i5-13400. Both coolers match their CPU socket, but availability depends on the processor's boxed/tray package. [AMD Wraith Stealth](https://www.amd.com/en/products/processors/desktops/ryzen/7000-series/amd-ryzen-5-7600.html) · [Intel boxed contents](https://www.intel.com/content/www/us/en/support/articles/000095154/processors.html)
+![Intel Laminar RM1 cooler](evidence/photos/Intel-Laminar-RM1-cooler.png)
+
+The Intel Laminar RM1 is the stock heatsink-and-fan cooler pictured here. It connects to the CPU_FAN header and is compatible with LGA1700; Intel includes it with boxed 12th-, 13th- and 14th-generation Core desktop processors such as the boxed i5-13400. Limits: it is not sold separately to end users, and tray/OEM processors may not include it. The Ryzen 5 7600 has a different stock solution, AMD Wraith Stealth, when purchased boxed. [Intel cooler specifications](https://www.intel.com/content/www/us/en/support/articles/000089190/processors.html) · [Intel boxed contents](https://www.intel.com/content/www/us/en/support/articles/000095154/processors.html) · [AMD Ryzen 5 7600](https://www.amd.com/en/products/processors/desktops/ryzen/7000-series/amd-ryzen-5-7600.html)
 
 ## Two builds
 
@@ -86,24 +89,25 @@ Still needs: case that supports micro-ATX, display, and peripherals; a discrete 
 | Motherboard | MSI PRO B760M-A WIFI DDR4 | LGA1700/B760 board; specifically uses DDR4. |
 | Memory | Crucial DDR4-3200, 16 GB DIMM | DDR4 module matches the board's memory slots. |
 | SSD | Samsung 870 EVO, 1 TB | 2.5-inch SATA drive connects to a SATA port and PSU cable. |
-| Cooler | Intel Laminar RM1 | Included with the boxed i5-13400; verify package contents if buying tray. |
+| Cooler | Intel Laminar RM1 (pictured) | Intel lists it as included with the boxed i5-13400; verify package contents if buying tray. |
 
 Still needs: a separate compatible PSU (the single RM750e is allocated to Build 1), case that supports micro-ATX, display and peripherals; discrete GPU only if needed. The parts list contains one PSU, so the second build is a compatible paper build but is not complete as an independently powered PC with the listed parts.
 
 ## Part 2 — Same facts, three operating systems
 
-Raw command output: [`evidence/windows-specs.txt`](evidence/windows-specs.txt) and [`evidence/linux-specs.txt`](evidence/linux-specs.txt). 
+Raw command output: [`evidence/windows-specs.txt`](evidence/windows-specs.txt) and [`evidence/linux-specs.txt`](evidence/linux-specs.txt).
+
 | Fact | Windows (PowerShell) | Linux (Ubuntu VM) |
 | --- | --- | --- |
 | CPU model | `Get-CimInstance Win32_Processor`: Intel Core i5-13420H | `lscpu`: Intel Core i5-13420H |
 | Cores / threads | `Get-CimInstance Win32_Processor`: 8 cores / 12 logical processors | `lscpu`: 2 CPUs, 2 cores, 1 thread per core (2 vCPUs assigned) |
-| Total memory | Not recorded in the saved output | `free -h`: 3.3 GiB total |
+| Total memory | Not recorded | `free -h`: 3.3 GiB total |
 | Memory modules and speed | `Get-CimInstance Win32_PhysicalMemory`: two 8 GiB modules, 3200 MT/s; SMBIOS reports DDR4 | `sudo dmidecode -t memory`: SMBIOS 2.5 detected, but no module details were returned |
 | Disk model and type | `Get-PhysicalDisk`: SAMSUNG MZAL4512HBLU-00BL2, SSD, NVMe, 512 GB | `lsblk`: `VBOX HARDDISK`, 25 GB, virtual SATA disk |
 | Free space | `Get-Volume C`: 45.44 GB free of 475.75 GB | `df -h /`: 7.1 GB free on the 11 GB root filesystem |
 | Architecture | `$env:PROCESSOR_ARCHITECTURE`: AMD64 | `uname -m`: x86_64 |
 
-Windows reports the host laptop’s full 8 cores and two physical 8 GiB memory modules, while Ubuntu reports a virtual machine with 2 vCPUs and 3.3 GiB of RAM. The VM also shows a generic 25 GB VBOX HARDDISK instead of the host’s 512 GB Samsung NVMe drive. Both systems report the same Intel Core i5-13420H model and x86-64 architecture, so the hypervisor passes through some CPU information while presenting limited or virtualized hardware
+Windows reports the host laptop's full 8 cores and two physical 8 GiB memory entries, while Ubuntu reports a virtual machine with only 2 vCPUs and 3.3 GiB RAM. The VM also exposes a generic 25 GB `VBOX HARDDISK` instead of the host's 512 GB Samsung NVMe, and its virtual disk appears as SATA. Both systems report the same Intel i5-13420H model and x86-64 architecture, showing that the hypervisor passes through some CPU identity while limiting or virtualizing other hardware.
 
 ## What did not work the first time
 
@@ -113,4 +117,4 @@ In Ubuntu, `sudo dmidecode -t memory` did not show RAM module information: it id
 
 - [`evidence/windows-specs.txt`](evidence/windows-specs.txt) — PowerShell output for CPU, physical memory, disk, C: volume and architecture.
 - [`evidence/linux-specs.txt`](evidence/linux-specs.txt) — Ubuntu output for CPU, memory, DMI, virtual disk, root filesystem and architecture.
-- [`evidence/photos/`](evidence/photos/) — maker product photos for the listed components. The folder currently has nine image files; the cooler has no separate photo, and the assignment does not specify a separate cooler model.
+- [`evidence/photos/`](evidence/photos/) — maker product photos for the listed components. The folder contains ten image files, including the Intel Laminar RM1 cooler.
