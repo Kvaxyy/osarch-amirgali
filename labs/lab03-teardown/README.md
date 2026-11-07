@@ -38,7 +38,7 @@ Micro-ATX motherboard with Intel B760 chipset and LGA1700 socket. It supports In
 
 ### Crucial DDR4-3200, 16 GB DIMM
 
-![Crucial DDR4-3200 16 GB DIMM](evidence/photos/Crucial-DDR4-3200-16GB-DIMM.png)
+![Crucial DDR4-3200 16 GB DIMM](evidence/photos/Crucial-DDR4-3200-16Gb-DIMM.png)
 
 16 GB DDR4-3200 desktop DIMM. It connects to DDR4 slots such as those on the MSI PRO B760M-A WIFI DDR4. Limits: DDR4 boards only; it cannot be installed in the ASUS DDR5 board. [Crucial DDR4 memory information](https://www.crucial.com/support/articles-faq-memory/differences-in-memory-speed-and-data-rate)
 
