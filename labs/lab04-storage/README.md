@@ -118,7 +118,7 @@ lsblk -o NAME,SIZE,TYPE,FSTYPE,MOUNTPOINTS
 
 | State | What `/proc/mdstat` showed | Evidence file |
 |---|---|---|
-| Healthy | `[2/2] [UU]`; initially `sdb1` and `sdc1` active | `evidence/array-healthy.txt` — **output not provided yet** |
+| Healthy | `[2/2] [UU]`; `mdadm --detail` showed `State : clean`, two active devices, `/dev/sdb1` and `/dev/sdc1` | `evidence/array-healthy.txt` |
 | Degraded | `[2/1] [U_]`; `mdadm --detail` showed `State : clean, degraded`, with `/dev/sdb1` active and the other slot removed | `evidence/array-degraded.txt` |
 | Rebuilt | `[2/2] [UU]`; `/dev/sdb1` and `/dev/sdd1` active; `State : clean` | `evidence/array-rebuilt.txt` — final output provided |
 
@@ -131,9 +131,13 @@ Baseline output from `sha256sum proof.txt random.bin`:
 7bcca60323a495e98a5e1f60500f29736d2b5caec2fe4f8228537ed43067963  random.bin
 ```
 
-After-failure checksums: **not provided yet**. Compare them with the baseline above; they should match. Record the result in `evidence/checksum-after-failure.txt` and state below whether they matched.
+After-failure output from `evidence/checksum-after-failure.txt`:
 
-Checksums before and after the failure: <match / do not match — fill in after comparing>
+```text
+8c755594d885cda7f180c48573d57d7aa41772d6a5d9245d4f2a8d707074c930e  proof.txt
+7bcca60323a495e98a5e1f60500f29736d2b5caec2fe4f8228537ed43067963  random.bin
+```
+Checksums before and after the failure: match 
 
 ## RAID is not a backup
 
