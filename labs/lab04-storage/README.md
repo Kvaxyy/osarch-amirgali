@@ -141,7 +141,7 @@ RAID 1 keeps a copy of data on another disk, so it can keep the volume available
 
 ## What did not work the first time
 
-The first `findmnt /mnt/mirror` check showed no output because the RAID array was not mounted after the VM session. I mounted it with `sudo mount /dev/md0 /mnt/mirror`, then confirmed the mount with `findmnt` and `lsblk`.
+The final 'findmnt' check returned no output because /dev/md0 was not mounted at that point. I mounted it with sudo mount /dev/md0 /mnt/mirror and confirmed the mount.
 
 ## Submission evidence checklist
 
