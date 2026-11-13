@@ -127,15 +127,15 @@ lsblk -o NAME,SIZE,TYPE,FSTYPE,MOUNTPOINTS
 Baseline output from `sha256sum proof.txt random.bin`:
 
 ```text
-8c755594d885cda7f180c48573d57d7aa41772d6a5d9245d4f2a8d707074c930e  proof.txt
-7bcca60323a495e98a5e1f60500f29736d2b5caec2fe4f8228537ed43067963  random.bin
+8c755594d885cda718c48573d57daa41772d76a5d9245d4f2a8d707074c930e9  proof.txt
+7bcca60323a495e98a5e1f60500fe29736d2b5caec2fe4f8228537ed43067963  random.bin
 ```
 
 After-failure output from `evidence/checksum-after-failure.txt`:
 
 ```text
-8c755594d885cda7f180c48573d57d7aa41772d6a5d9245d4f2a8d707074c930e  proof.txt
-7bcca60323a495e98a5e1f60500f29736d2b5caec2fe4f8228537ed43067963  random.bin
+8c755594d885cda718c48573d57daa41772d76a5d9245d4f2a8d707074c930e9  proof.txt
+7bcca60323a495e98a5e1f60500fe29736d2b5caec2fe4f8228537ed43067963  random.bin
 ```
 Checksums before and after the failure: match 
 
