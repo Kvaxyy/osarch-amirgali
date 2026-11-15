@@ -1,0 +1,2 @@
+amirgali@lab1:~$ file staff-broken.csv
+staff-broken.csv: Non-ISO extended-ASCII text, with CRLF line terminators
