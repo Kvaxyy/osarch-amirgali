@@ -24,13 +24,9 @@ Run from `labs/lab05-encoding/`:
 ```sh
 sh scripts/fix.sh
 ```
-The script runs:
-```
-iconv -f RK1048 -t UTF-8 evidence/staff-broken.csv > evidence/staff-fixed.csv
-```
-The script converts the complete source file from RK1048 to UTF-8, preserves the existing CRLF line endings, and adds a UTF-8 BOM (`EF BB BF`) so Excel on Windows can identify UTF-8 when opening the CSV directly. The semicolon separator is unchanged.
+The script decodes the complete source from RK1048, normalizes every line ending to CRLF, and adds the UTF-8 BOM (`EF BB BF`) for direct opening in Windows Excel. The semicolon separator is preserved.
 ## Verification
-- file evidence/staff-fixed.csv reports UTF-8 text with CRLF line terminators (evidence/file-after.txt).
+- `file evidence/staff-fixed.csv` reports UTF-8 with BOM and CRLF line terminators (`evidence/file-after.txt`).
 - The fixed file has 16 lines: one header and 15 data rows.
 - The fixed CSV uses `;` as its separator, starts with the UTF-8 BOM `EF BB BF`, and displays the Russian and Kazakh names correctly.
 - evidence/opens-correctly.png shows the complete fixed CSV open in Excel, LibreOffice Calc, and a terminal.
