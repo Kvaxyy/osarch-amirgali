@@ -1,0 +1,43 @@
+role,component,model,price_kzt,source,date
+accountant,CPU,AMD Ryzen 5 5600GT AM4 OEM,95990,https://shop.kz/offer/protsessor-amd-ryzen-5-5600gt-am4-oem/,2026-11-20
+accountant,motherboard,ASUS Prime B550M-K AM4,50590,https://shop.kz/offer/materinskaya-plata-asus-prime-b550m-k-am4/,2026-11-20
+accountant,memory,16GB DDR4-3200 Hiksemi Armor (1x16),64990,https://shop.kz/offer/ddr-4-udimm-16-gb-3200-mhz-hiksemi-armor-box-hsc416u32d2/,2026-11-20
+accountant,storage,Kingston NV3 1TB M.2 PCIe 4.0,78990,https://shop.kz/offer/ssd-nakopitel-1-tb-kingston-nv3-m-2-pcie-4-0/,2026-11-20
+accountant,power supply,AeroCool VX PLUS Stealth 500W,15790,https://shop.kz/offer/blok-pitaniya-atx-500-w-aerocool-vx-plus-stealth-500/?srsltid=AYCX9vIxhCMi9nLhNXgs49SxDGH8i6l60a4V-wIp5cwYPHaw0hsEYlmG,2026-11-20
+accountant,case,AeroCool CS-111-G-BK-V1 mATX,16900,https://shop.kz/offer/korpus-aerocool-cs-111-g-bk-v1-black/,2026-11-20
+accountant,cpu cooler,DeepCool AG200 AM4,5990,https://shop.kz/offer/kuler-deepcool-ag200/,2026-11-20
+accountant,monitor,Philips 24E1N1200A/01 23.8in IPS,52100,https://shop.kz/offer/monitor-23-8-philips-24e1n1200a-01-black/,2026-11-20
+accountant,operating system,Microsoft Windows 11 Home 64-bit OEM DVD,79990,https://shop.kz/offer/microsoft-windows-11-home-64-bit-dvd/,2026-11-20
+sales manager,CPU,AMD Ryzen 5 5600GT AM4 OEM,95990,https://shop.kz/offer/protsessor-amd-ryzen-5-5600gt-am4-oem/,2026-11-20
+sales manager,motherboard,ASUS Prime B550M-K AM4,50590,https://shop.kz/offer/materinskaya-plata-asus-prime-b550m-k-am4/,2026-11-20
+sales manager,memory,16GB DDR4-3200 Hiksemi Armor (1x16),64990,https://shop.kz/offer/ddr-4-udimm-16-gb-3200-mhz-hiksemi-armor-box-hsc416u32d2/,2026-11-20
+sales manager,storage,Kingston NV3 1TB M.2 PCIe 4.0,78990,https://shop.kz/offer/ssd-nakopitel-1-tb-kingston-nv3-m-2-pcie-4-0/,2026-11-20
+sales manager,power supply,AeroCool VX PLUS Stealth 500W,15790,https://shop.kz/offer/blok-pitaniya-atx-500-w-aerocool-vx-plus-stealth-500/?srsltid=AYCX9vIxhCMi9nLhNXgs49SxDGH8i6l60a4V-wIp5cwYPHaw0hsEYlmG,2026-11-20
+sales manager,case,AeroCool CS-111-G-BK-V1 mATX,16900,https://shop.kz/offer/korpus-aerocool-cs-111-g-bk-v1-black/,2026-11-20
+sales manager,cpu cooler,DeepCool AG200 AM4,5990,https://shop.kz/offer/kuler-deepcool-ag200/,2026-11-20
+sales manager,monitor,Philips 24E1N1200A/01 23.8in IPS,52100,https://shop.kz/offer/monitor-23-8-philips-24e1n1200a-01-black/,2026-11-20
+sales manager,operating system,Microsoft Windows 11 Home 64-bit OEM DVD,79990,https://shop.kz/offer/microsoft-windows-11-home-64-bit-dvd/,2026-11-20
+web developer,CPU,AMD Ryzen 5 5600GT AM4 OEM,95990,https://shop.kz/offer/protsessor-amd-ryzen-5-5600gt-am4-oem/,2026-11-20
+web developer,motherboard,ASUS Prime B550M-K AM4,50590,https://shop.kz/offer/materinskaya-plata-asus-prime-b550m-k-am4/,2026-11-20
+web developer,memory,32GB DDR4-3200 Hiksemi Armor (2x16),129980,https://shop.kz/offer/ddr-4-udimm-16-gb-3200-mhz-hiksemi-armor-box-hsc416u32d2/,2026-11-20
+web developer,storage,Kingston NV3 1TB M.2 PCIe 4.0,78990,https://shop.kz/offer/ssd-nakopitel-1-tb-kingston-nv3-m-2-pcie-4-0/,2026-11-20
+web developer,power supply,AeroCool VX PLUS Stealth 500W,15790,https://shop.kz/offer/blok-pitaniya-atx-500-w-aerocool-vx-plus-stealth-500/?srsltid=AYCX9vIxhCMi9nLhNXgs49SxDGH8i6l60a4V-wIp5cwYPHaw0hsEYlmG,2026-11-20
+web developer,case,AeroCool CS-111-G-BK-V1 mATX,16900,https://shop.kz/offer/korpus-aerocool-cs-111-g-bk-v1-black/,2026-11-20
+web developer,cpu cooler,DeepCool AG200 AM4,5990,https://shop.kz/offer/kuler-deepcool-ag200/,2026-11-20
+web developer,monitor,Philips 24E1N1200A/01 23.8in IPS,52100,https://shop.kz/offer/monitor-23-8-philips-24e1n1200a-01-black/,2026-11-20
+web developer,operating system,Microsoft Windows 11 Home 64-bit OEM DVD,79990,https://shop.kz/offer/microsoft-windows-11-home-64-bit-dvd/,2026-11-20
+designer,CPU,AMD Ryzen 5 5600GT AM4 OEM,95990,https://shop.kz/offer/protsessor-amd-ryzen-5-5600gt-am4-oem/,2026-11-20
+designer,motherboard,ASUS Prime B550M-K AM4,50590,https://shop.kz/offer/materinskaya-plata-asus-prime-b550m-k-am4/,2026-11-20
+designer,memory,32GB DDR4-3200 Hiksemi Armor (2x16),129980,https://shop.kz/offer/ddr-4-udimm-16-gb-3200-mhz-hiksemi-armor-box-hsc416u32d2/,2026-11-20
+designer,storage,Kingston NV3 1TB M.2 PCIe 4.0,78990,https://shop.kz/offer/ssd-nakopitel-1-tb-kingston-nv3-m-2-pcie-4-0/,2026-11-20
+designer,power supply,MSI MAG A650BN 650W,24590,https://shop.kz/offer/blok-pitaniya-atx-650-w-msi-mag-a650bn/,2026-11-20
+designer,case,AeroCool CS-111-G-BK-V1 mATX,16900,https://shop.kz/offer/korpus-aerocool-cs-111-g-bk-v1-black/,2026-11-20
+designer,cpu cooler,DeepCool AG200 AM4,5990,https://shop.kz/offer/kuler-deepcool-ag200/,2026-11-20
+designer,monitor,Philips 24E1N1200A/01 23.8in IPS,52100,https://shop.kz/offer/monitor-23-8-philips-24e1n1200a-01-black/,2026-11-20
+designer,operating system,Microsoft Windows 11 Home 64-bit OEM DVD,79990,https://shop.kz/offer/microsoft-windows-11-home-64-bit-dvd/,2026-11-20
+designer,graphics card,Palit GeForce RTX 3050 StormX OC V1 6GB,173990,https://shop.kz/offer/videokarta-palit-rtx-3050-stormx-oc-v1-6-gb-geforce-rtx-3050/,2026-11-20
+TOTAL,build subtotal,Accountant,461330,,2026-11-20
+TOTAL,build subtotal,Sales manager,461330,,2026-11-20
+TOTAL,build subtotal,Web developer,526320,,2026-11-20
+TOTAL,build subtotal,Designer,709110,,2026-11-20
+TOTAL,grand total,All four builds,2158090,,2026-11-20
