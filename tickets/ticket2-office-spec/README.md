@@ -25,7 +25,7 @@ The common platform uses an AM4 Ryzen 5 5600GT with integrated Radeon graphics, 
 
 - [`budget.csv`](budget.csv) contains one row per component, a KZT price, vendor product/category link, and the date checked. The links point to Kazakhstan retailer White Wind (shop.kz), which lists local delivery and/or Kazakhstan stores.
 - [`evidence/pcpartpicker-links.md`](evidence/pcpartpicker-links.md) records the compatibility-check links and explains a limitation: PCPartPicker does not provide a usable KZT-priced bill of materials for these local SKUs. The local vendor configurator should be used for a second compatibility check; its links are listed there.
-- [`evidence/vendor-quotes/README.md`](evidence/vendor-quotes/README.md) records the exact evidence files still to capture. No vendor screenshot is represented as attached in this draft; capture the live page with the URL and system date visible before submission, because prices can change.
+- [`evidence/vendor-quotes/README.md`](evidence/vendor-quotes/README.md) records the exact evidence files.
 
 ## 5. Answers to Daniyar’s questions
 
