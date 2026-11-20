@@ -1,5 +1,5 @@
 # Ticket 2 — Kitting out the new office
-**Amirgali A. 
+**Amirgali A.**  
 **Course:** IFT 103 — Operating System Architecture  
 **Price check date:** 2026-11-20  
 
