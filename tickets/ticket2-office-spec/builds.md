@@ -1,5 +1,6 @@
 # Ticket 2 — Four role-based builds
-**Amirgali A.**
+**Amirgali A.** 
+
 **Price date:** 2026-11-20. Prices are retailer listings observed on the date shown in `budget.csv`; confirm availability and final checkout price before purchase. Common component links and prices are in the CSV.
 
 ## Compatibility baseline
