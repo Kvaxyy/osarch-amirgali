@@ -1,12 +1,16 @@
-amirgali@lab1:~$ file staff-fixed.csv
-staff-fixed.csv: Unicode text, UTF-8 text, with CRLF, CR line terminators
+PS C:\Users\User\Downloads> Format-Hex .\staff-fixed.csv | Select-Object -First 4
 
-amirgali@lab1:~$ wc -l staff-fixed.csv
-16 staff-fixed.csv
+           Path: C:\Users\User\Downloads\staff-fixed.csv
 
-$ xxd evidence/staff-fixed.csv | head -n 4
-00000000: efbb bf49 443b d0a4 d0b0 d0bc d0b8 d0bb  ...ID;..........
-00000010: d0b8 d18f 3bd0 98d0 bcd1 8f3b d09e d182  ....;......;....
-00000020: d0b4 d0b5 d0bb 3bd0 94d0 bed0 bbd0 b6d0  ......;.........
-00000030: bdd0 bed1 81d1 82d1 8c3b d093 d0be d180  .........;......
+           00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
 
+00000000   EF BB BF 49 44 3B D0 A4 D0 B0 D0 BC D0 B8 D0 BB  ï»¿ID;Ð¤Ð°Ð¼Ð¸Ð»
+00000010   D0 B8 D1 8F 3B D0 98 D0 BC D1 8F 3B D0 9E D1 82  Ð¸Ñ;ÐÐ¼Ñ;ÐÑ
+00000020   D0 B4 D0 B5 D0 BB 3B D0 94 D0 BE D0 BB D0 B6 D0  Ð´ÐµÐ»;ÐÐ¾Ð»Ð¶Ð
+00000030   BD D0 BE D1 81 D1 82 D1 8C 3B D0 93 D0 BE D1 80  ½Ð¾ÑÑÑ;ÐÐ¾Ñ
+
+PS C:\Users\User\Downloads> (Get-Content .\staff-fixed.csv).Count
+16
+
+PS C:\Users\User\Downloads> "CRLF=$crlf LF=$bareLf CR=$bareCr"
+CRLF=16 LF=0 CR=0
