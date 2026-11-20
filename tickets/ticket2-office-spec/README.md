@@ -17,7 +17,7 @@ For this draft I assume a four-year planning horizon; existing keyboards, mice, 
 
 ## 3. What I built
 
-See [`builds.md`](builds.md) for each role’s load, bottleneck, trade-off, parts, compatibility notes, and total. All four draft builds include at least 16 GB RAM, a 1 TB SSD, one monitor, a licensed OS, and a complete tower. The grand total is **2,185,890 KZT**, below the 3,000,000 KZT cap by **814,110 KZT**.
+See [`builds.md`](builds.md) for each role’s load, bottleneck, trade-off, parts, compatibility notes, and total. All four draft builds include at least 16 GB RAM, a 1 TB SSD, one monitor, a licensed OS, and a complete tower. The grand total is **2,158,090 KZT**, below the 3,000,000 KZT cap by **841,910 KZT**.
 
 The common platform uses an AM4 Ryzen 5 5600GT with integrated Radeon graphics, an AM4 B550 motherboard, DDR4-3200 memory, an M.2 NVMe SSD, and a micro-ATX case. The designer receives 32 GB RAM and a GeForce RTX 3050 6 GB; the power supply is raised to 650 W. The other three builds use 16 GB and integrated graphics. A dedicated AM4 cooler is included because the researched 5600GT listing is OEM and does not include a cooler.
 
