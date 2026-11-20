@@ -1,5 +1,8 @@
-$ file evidence/staff-fixed.csv
-evidence/staff-fixed.csv: Unicode text, UTF-8 (with BOM) text, with CRLF line terminators
+amirgali@lab1:~$ file staff-fixed.csv
+staff-fixed.csv: Unicode text, UTF-8 text, with CRLF, CR line terminators
+
+amirgali@lab1:~$ wc -l staff-fixed.csv
+16 staff-fixed.csv
 
 $ xxd evidence/staff-fixed.csv | head -n 4
 00000000: efbb bf49 443b d0a4 d0b0 d0bc d0b8 d0bb  ...ID;..........
