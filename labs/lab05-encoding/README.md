@@ -26,7 +26,8 @@ sh scripts/fix.sh
 ```
 The script decodes the complete source from RK1048, normalizes every line ending to CRLF, and adds the UTF-8 BOM (`EF BB BF`) for direct opening in Windows Excel. The semicolon separator is preserved.
 ## Verification
-- `file evidence/staff-fixed.csv` reports UTF-8 with BOM and CRLF line terminators (`evidence/file-after.txt`).
+- PowerShell hex output shows the UTF-8 BOM (`EF BB BF`) and UTF-8 bytes (`evidence/file-after.txt`).
+- PowerShell counted 16 lines (header plus 15 records) and verified CRLF endings: `CRLF=16 LF=0 CR=0` (`evidence/file-after.txt`).
 - The fixed file has 16 lines: one header and 15 data rows.
 - The fixed CSV uses `;` as its separator, starts with the UTF-8 BOM `EF BB BF`, and displays the Russian and Kazakh names correctly.
 - evidence/opens-correctly.png shows the complete fixed CSV open in Excel, LibreOffice Calc, and a terminal.
