@@ -1,23 +1,22 @@
 # Lab 6 — Live processes and memory pressure
 
-Pair: [имя 1] + [имя 2]  
+Pair: Amirgali A. + Kelis A.  
 Date: 2026-11-22  
-Guests: Ubuntu [версия], 3.3 GiB RAM; Windows 11 Enterprise Evaluation, RAM [указать]
-
+Guests: Ubuntu 26.04.1 LTS, 3.3 GiB RAM; Windows 11 Enterprise Evaluation, RAM 4GiB.
 ## Part 1 — One process, three tools
 
 Process chosen: `VBoxSVC.exe` on Windows and the VirtualBox service (`VBoxService`) on Ubuntu. I chose it because the VirtualBox Guest Additions process was available in both guests.
 
 | Metric | Task Manager | Process Explorer | htop / ps |
 |---|---:|---:|---:|
-| PID | 24032 | 24032 | [нужен PID из строки VBoxService в htop] |
-| Parent (name and PID) | Not shown | Not visible in screenshot | [нужен PPID из `ps`] |
-| Memory as shown by default | Working set: 34,156 K | Working Set: 34,688 K | RES: [нужно значение процесса VBoxService] |
+| PID | 24032 | 24032 | 1338 |
+| Parent (name and PID) | Not shown | Not shown | systemd, PID 1 |
+| Memory as shown by default | Working set: 34,156 K | Working Set: 34,688 K | RSS: 4044 KB |
 | Private memory | Not shown | Private Bytes: 14,228 K; WS Private: 12,820 K | Not shown |
-| Working set / RES | 34,156 K | 34,688 K | [нужен RES] |
-| Virtual size | Not shown | Not shown | [нужен VIRT] |
-| Handles / file descriptors | 1,920 handles | 1,922 handles | [нужно число FD, если собрано] |
-| Threads | 17 | 17 | [нужно число NLWP/threads] |
+| Working set / RES | 34,156 K | 34,688 K | 4044 KB RSS |
+| Virtual size | Not shown | Not shown | 292100 KB VSZ |
+| Handles / file descriptors | 1,920 handles | 1,922 handles | 5 |
+| Threads | 17 | 17 | 9 |
 
 ### Where the tools disagree
 
@@ -39,7 +38,7 @@ Guest RAM: 3.3 GiB. Swap: 2.0 GiB.
 
 During the experiment, memory availability fell sharply and swap usage increased. The Linux OOM killer terminated `stress-ng-vm` processes when memory was exhausted. After the test, available memory returned to 2.9 GiB and swap usage fell to 52 MiB.
 
-Responsiveness: [опиши своими словами, насколько Ubuntu тормозила во время нагрузки и вернулась ли к нормальной работе после неё.]
+Responsiveness: Under stress, as memory usage increased, the screen would stutter and freeze for a few seconds—roughly once every five seconds. Once the stress was removed, everything returned to normal.
 
 ### What the kernel did
 
@@ -52,3 +51,13 @@ Command:
 ```powershell
 Get-WinEvent -FilterHashtable @{LogName='System'; ProviderName='Microsoft-Windows-Resource-Exhaustion-Detector'} -MaxEvents 5 |
   Format-List TimeCreated, Id, Message
+```
+Result: No matching events were found. The Windows guest did not record a resource exhaustion event.
+### What did not work the first time
+The first cat memory-pressure.txt command returned “No such file or directory” because the file had not been created in the current Ubuntu directory. Then I created file and collected all the needed information again.
+### Evidence
+- evidence/task-manager.png
+- evidence/process-explorer.png
+- evidence/htop.png
+- evidence/memory-pressure.txt
+- evidence/kernel-log-extract.txt
