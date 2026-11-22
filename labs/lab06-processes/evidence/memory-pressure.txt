@@ -1,0 +1,27 @@
+=== BEFORE 2026-11-22 08:29:47 UTC ===
+$ free -h
+               total        used        free      shared  buff/cache   available
+Mem:             3.3Gi       452Mi       2.3Gi       1.1Mi       809Mi       2.9Gi
+Swap:            2.0Gi         0B        2.0Gi
+
+=== DURING 2026-11-22 08:34:47 UTC ===
+$ free -h
+               total        used        free      shared  buff/cache   available
+Mem:             3.3Gi       3.2Gi       140Mi       120Ki        96Mi        71Mi
+Swap:            2.0Gi       1.9Gi       140Mi
+
+[ 1632.008677] Out of memory: Killed process 3552 (stress-ng-vm) total-vm:2693580kB, anon-rss:2208012kB, file-rss:524kB, shmem-rss:0kB, UID:1000 pgtables:5252kB oom_score_adj:1000
+
+2026-11-22 08:34:52 UTC
+$ free -h
+               total        used        free      shared  buff/cache   available
+Mem:             3.3Gi       3.2Gi       141Mi       128Ki        68Mi        58Mi
+Swap:            2.0Gi       2.0Gi        12Mi
+
+[ 1636.401397] Out of memory: Killed process 3553 (stress-ng-vm) total-vm:2693580kB, anon-rss:599016kB, file-rss:520kB, shmem-rss:0kB, UID:1000 pgtables:5252kB oom_score_adj:1000
+
+=== AFTER 2026-11-22 08:42:37 UTС ===
+$ free -h
+               total        used        free      shared  buff/cache   available
+Mem:             3.3Gi       437Mi       2.9Gi       316Ki       228Mi       2.9Gi
+Swap:            2.0Gi        52Mi       1.9Gi
