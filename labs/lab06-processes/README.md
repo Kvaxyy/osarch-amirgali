@@ -15,7 +15,7 @@ Process chosen: `VBoxSVC.exe` on Windows and the VirtualBox service (`VBoxServic
 | Private memory | Not shown | Private Bytes: 14,228 K; WS Private: 12,820 K | Not shown |
 | Working set / RES | 34,156 K | 34,688 K | 4044 KB RSS |
 | Virtual size | Not shown | Not shown | 292100 KB VSZ |
-| Handles / file descriptors | 1,920 handles | 1,922 handles | 5 |
+| Handles / file descriptors | 1,920 handles | 1,922 handles | 5 file descriptors |
 | Threads | 17 | 17 | 9 |
 
 ### Where the tools disagree
