@@ -42,7 +42,7 @@ Responsiveness: Under stress, as memory usage increased, the screen would stutte
 
 ### What the kernel did
 
-The kernel OOM killer terminated `stress-ng-vm` processes because the guest ran out of available memory. The log excerpt is saved in `evidence/kernel-log-extract.txt`.
+The Linux OOM killer terminated stress-ng-vm processes (PIDs 3596, 3598 and 3604) when the guest ran out of memory. The log excerpt is saved in `evidence/kernel-log-extract.txt`.
 
 ### Windows event log
 
